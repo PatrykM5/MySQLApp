@@ -58,6 +58,7 @@
             this.ConStatusLabel = new System.Windows.Forms.Label();
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
+            this.backgroundW = new System.ComponentModel.BackgroundWorker();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
@@ -374,6 +375,10 @@
             this.ConnectionBrakLabel.TabIndex = 3;
             this.ConnectionBrakLabel.Text = "Brak";
             // 
+            // backgroundW
+            // 
+            this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
+            // 
             // Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,5 +437,6 @@
         private System.Windows.Forms.Label ConStatusLabel;
         private System.Windows.Forms.Label ConnectionOKLabel;
         private System.Windows.Forms.Label ConnectionBrakLabel;
+        private System.ComponentModel.BackgroundWorker backgroundW;
     }
 }

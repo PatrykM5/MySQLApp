@@ -34,8 +34,11 @@ namespace mysql
             ConnectionBrakLabel.Hide();
             ShowAllUsers();
             ShowAllBikes();
-            t1 = new Thread(ConnectCheck);
-            t1.Start();
+            backgroundW.DoWork += backgroundW_DoWork;
+            backgroundW.ProgressChanged += backgroundW_ProgressChanged;
+            backgroundW.RunWorkerAsync();
+            //t1 = new Thread(ConnectCheck);
+            //t1.Start();
         }
         //sprawdzanie co 10s czy wciąż jest połączony do serwera
         private void ConnectCheck()
@@ -47,6 +50,7 @@ namespace mysql
                 if (temp != "Open")
                 {
                     connected = false;
+                    backgroundW.RunWorkerAsync();
                     //if (MessageBox.Show("Czy chcesz wyłączyć Panel?", "Info", MessageBoxButtons.YesNo) == DialogResult.No)
                     //{
                     //    t1.Suspend();
@@ -114,7 +118,7 @@ namespace mysql
             else
             {
                 //t1.Suspend();
-                t1.Abort();
+                //t1.Abort();
             }
         }
 
@@ -544,6 +548,44 @@ namespace mysql
                 }
             }
             
+        }
+
+        
+        
+        private void backgroundW_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string temp;
+            while (true)
+            {
+                temp = Form1.connection.State.ToString();
+                if (temp != "Open")
+                {
+                    connected = false;
+                    //backgroundW.RunWorkerAsync();
+                    if (MessageBox.Show("Utracono połączenie, odnowić?", "Info", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        try {
+                            Form1.connection.Open();
+                        }
+                        catch(MySqlException ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "ERROR!");
+                        }
+                    }
+                    else
+                    {
+                        //t1.Suspend();
+                        this.Close();
+                    }
+
+                }
+                Thread.Sleep(1000);
+            }
+        }
+        
+        private void backgroundW_ProgressChanged(object sender,ProgressChangedEventArgs e)
+        {
+
         }
     }
 }
