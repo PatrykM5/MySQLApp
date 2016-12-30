@@ -39,6 +39,12 @@
             this.DelUserButton = new System.Windows.Forms.Button();
             this.AddUserButton = new System.Windows.Forms.Button();
             this.PlacesPage = new System.Windows.Forms.TabPage();
+            this.ShowPlaceButton = new System.Windows.Forms.Button();
+            this.PlaceNameLabel = new System.Windows.Forms.Label();
+            this.PlaceNameBox = new System.Windows.Forms.TextBox();
+            this.OutPlacesLabel = new System.Windows.Forms.Label();
+            this.PlaceListBox = new System.Windows.Forms.ListBox();
+            this.EditPlaceButton = new System.Windows.Forms.Button();
             this.ShowABiPlaceButton = new System.Windows.Forms.Button();
             this.DelPlaceButton = new System.Windows.Forms.Button();
             this.AddPlaceButton = new System.Windows.Forms.Button();
@@ -69,9 +75,9 @@
             // 
             this.PanelControl.Controls.Add(this.UsersPage);
             this.PanelControl.Controls.Add(this.PlacesPage);
+            this.PanelControl.Controls.Add(this.BikesPage);
             this.PanelControl.Controls.Add(this.ExtraCostsPage);
             this.PanelControl.Controls.Add(this.PaymentPage);
-            this.PanelControl.Controls.Add(this.BikesPage);
             this.PanelControl.Controls.Add(this.RentsPage);
             this.PanelControl.Controls.Add(this.AdminsPage);
             this.PanelControl.Location = new System.Drawing.Point(12, 12);
@@ -176,6 +182,12 @@
             // 
             // PlacesPage
             // 
+            this.PlacesPage.Controls.Add(this.ShowPlaceButton);
+            this.PlacesPage.Controls.Add(this.PlaceNameLabel);
+            this.PlacesPage.Controls.Add(this.PlaceNameBox);
+            this.PlacesPage.Controls.Add(this.OutPlacesLabel);
+            this.PlacesPage.Controls.Add(this.PlaceListBox);
+            this.PlacesPage.Controls.Add(this.EditPlaceButton);
             this.PlacesPage.Controls.Add(this.ShowABiPlaceButton);
             this.PlacesPage.Controls.Add(this.DelPlaceButton);
             this.PlacesPage.Controls.Add(this.AddPlaceButton);
@@ -187,9 +199,63 @@
             this.PlacesPage.Text = "Miejsca";
             this.PlacesPage.UseVisualStyleBackColor = true;
             // 
+            // ShowPlaceButton
+            // 
+            this.ShowPlaceButton.Location = new System.Drawing.Point(38, 122);
+            this.ShowPlaceButton.Name = "ShowPlaceButton";
+            this.ShowPlaceButton.Size = new System.Drawing.Size(124, 34);
+            this.ShowPlaceButton.TabIndex = 8;
+            this.ShowPlaceButton.Text = "Informacje o miejscu";
+            this.ShowPlaceButton.UseVisualStyleBackColor = true;
+            this.ShowPlaceButton.Click += new System.EventHandler(this.ShowPlaceButton_Click);
+            // 
+            // PlaceNameLabel
+            // 
+            this.PlaceNameLabel.AutoSize = true;
+            this.PlaceNameLabel.Location = new System.Drawing.Point(272, 25);
+            this.PlaceNameLabel.Name = "PlaceNameLabel";
+            this.PlaceNameLabel.Size = new System.Drawing.Size(131, 13);
+            this.PlaceNameLabel.TabIndex = 7;
+            this.PlaceNameLabel.Text = "Szukaj miejsca po nazwie:";
+            // 
+            // PlaceNameBox
+            // 
+            this.PlaceNameBox.Location = new System.Drawing.Point(275, 41);
+            this.PlaceNameBox.Name = "PlaceNameBox";
+            this.PlaceNameBox.Size = new System.Drawing.Size(152, 20);
+            this.PlaceNameBox.TabIndex = 6;
+            this.PlaceNameBox.TextChanged += new System.EventHandler(this.PlaceNameBox_TextChanged);
+            // 
+            // OutPlacesLabel
+            // 
+            this.OutPlacesLabel.AutoSize = true;
+            this.OutPlacesLabel.Location = new System.Drawing.Point(272, 93);
+            this.OutPlacesLabel.Name = "OutPlacesLabel";
+            this.OutPlacesLabel.Size = new System.Drawing.Size(64, 13);
+            this.OutPlacesLabel.TabIndex = 5;
+            this.OutPlacesLabel.Text = "Lista miejsc:";
+            // 
+            // PlaceListBox
+            // 
+            this.PlaceListBox.FormattingEnabled = true;
+            this.PlaceListBox.Location = new System.Drawing.Point(275, 109);
+            this.PlaceListBox.Name = "PlaceListBox";
+            this.PlaceListBox.Size = new System.Drawing.Size(152, 173);
+            this.PlaceListBox.TabIndex = 4;
+            // 
+            // EditPlaceButton
+            // 
+            this.EditPlaceButton.Location = new System.Drawing.Point(38, 162);
+            this.EditPlaceButton.Name = "EditPlaceButton";
+            this.EditPlaceButton.Size = new System.Drawing.Size(124, 34);
+            this.EditPlaceButton.TabIndex = 3;
+            this.EditPlaceButton.Text = "Edytuj miejsce";
+            this.EditPlaceButton.UseVisualStyleBackColor = true;
+            this.EditPlaceButton.Click += new System.EventHandler(this.EditPlaceButton_Click);
+            // 
             // ShowABiPlaceButton
             // 
-            this.ShowABiPlaceButton.Location = new System.Drawing.Point(38, 122);
+            this.ShowABiPlaceButton.Location = new System.Drawing.Point(38, 242);
             this.ShowABiPlaceButton.Name = "ShowABiPlaceButton";
             this.ShowABiPlaceButton.Size = new System.Drawing.Size(124, 40);
             this.ShowABiPlaceButton.TabIndex = 2;
@@ -204,6 +270,7 @@
             this.DelPlaceButton.TabIndex = 1;
             this.DelPlaceButton.Text = "Usuń miejsce";
             this.DelPlaceButton.UseVisualStyleBackColor = true;
+            this.DelPlaceButton.Click += new System.EventHandler(this.DelPlaceButton_Click);
             // 
             // AddPlaceButton
             // 
@@ -213,6 +280,7 @@
             this.AddPlaceButton.TabIndex = 0;
             this.AddPlaceButton.Text = "Dodaj miejsce";
             this.AddPlaceButton.UseVisualStyleBackColor = true;
+            this.AddPlaceButton.Click += new System.EventHandler(this.AddPlaceButton_Click);
             // 
             // ExtraCostsPage
             // 
@@ -398,6 +466,7 @@
             this.UsersPage.ResumeLayout(false);
             this.UsersPage.PerformLayout();
             this.PlacesPage.ResumeLayout(false);
+            this.PlacesPage.PerformLayout();
             this.BikesPage.ResumeLayout(false);
             this.BikesPage.PerformLayout();
             this.ResumeLayout(false);
@@ -438,5 +507,11 @@
         private System.Windows.Forms.Label ConnectionOKLabel;
         private System.Windows.Forms.Label ConnectionBrakLabel;
         private System.ComponentModel.BackgroundWorker backgroundW;
+        private System.Windows.Forms.Button EditPlaceButton;
+        private System.Windows.Forms.ListBox PlaceListBox;
+        private System.Windows.Forms.Label OutPlacesLabel;
+        private System.Windows.Forms.Label PlaceNameLabel;
+        private System.Windows.Forms.TextBox PlaceNameBox;
+        private System.Windows.Forms.Button ShowPlaceButton;
     }
 }

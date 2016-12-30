@@ -71,6 +71,8 @@
             // 
             // EdBikePlaceCBox
             // 
+            this.EdBikePlaceCBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.EdBikePlaceCBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.EdBikePlaceCBox.FormattingEnabled = true;
             this.EdBikePlaceCBox.Location = new System.Drawing.Point(123, 54);
             this.EdBikePlaceCBox.Name = "EdBikePlaceCBox";
@@ -80,8 +82,10 @@
             // 
             // EdBikeUsLoginCBox
             // 
+            this.EdBikeUsLoginCBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.EdBikeUsLoginCBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.EdBikeUsLoginCBox.FormattingEnabled = true;
-            this.EdBikeUsLoginCBox.Location = new System.Drawing.Point(123, 81);
+            this.EdBikeUsLoginCBox.Location = new System.Drawing.Point(123, 112);
             this.EdBikeUsLoginCBox.Name = "EdBikeUsLoginCBox";
             this.EdBikeUsLoginCBox.Size = new System.Drawing.Size(121, 21);
             this.EdBikeUsLoginCBox.TabIndex = 5;
@@ -90,7 +94,7 @@
             // LoginUserLabel
             // 
             this.LoginUserLabel.AutoSize = true;
-            this.LoginUserLabel.Location = new System.Drawing.Point(19, 84);
+            this.LoginUserLabel.Location = new System.Drawing.Point(19, 115);
             this.LoginUserLabel.Name = "LoginUserLabel";
             this.LoginUserLabel.Size = new System.Drawing.Size(98, 13);
             this.LoginUserLabel.TabIndex = 6;
@@ -99,7 +103,7 @@
             // RentBikeLabel
             // 
             this.RentBikeLabel.AutoSize = true;
-            this.RentBikeLabel.Location = new System.Drawing.Point(41, 110);
+            this.RentBikeLabel.Location = new System.Drawing.Point(41, 87);
             this.RentBikeLabel.Name = "RentBikeLabel";
             this.RentBikeLabel.Size = new System.Drawing.Size(76, 13);
             this.RentBikeLabel.TabIndex = 7;
@@ -108,7 +112,7 @@
             // RentYesRButton
             // 
             this.RentYesRButton.AutoSize = true;
-            this.RentYesRButton.Location = new System.Drawing.Point(123, 108);
+            this.RentYesRButton.Location = new System.Drawing.Point(123, 85);
             this.RentYesRButton.Name = "RentYesRButton";
             this.RentYesRButton.Size = new System.Drawing.Size(44, 17);
             this.RentYesRButton.TabIndex = 8;
@@ -120,7 +124,7 @@
             // RentNoRButton
             // 
             this.RentNoRButton.AutoSize = true;
-            this.RentNoRButton.Location = new System.Drawing.Point(173, 108);
+            this.RentNoRButton.Location = new System.Drawing.Point(173, 85);
             this.RentNoRButton.Name = "RentNoRButton";
             this.RentNoRButton.Size = new System.Drawing.Size(41, 17);
             this.RentNoRButton.TabIndex = 9;

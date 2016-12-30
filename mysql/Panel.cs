@@ -18,7 +18,8 @@ namespace mysql
         public static EditUserForm euf1;
         public static AddUserForm auf1;
         public static EditBikeForm ebf1;
-        Thread t1;
+        public static EditPlaceForm epf1;
+        //Thread t1;
         public Panel()
         {
             InitializeComponent();
@@ -26,14 +27,15 @@ namespace mysql
             //DelUserButton.Enabled = false;
             //EditUserButton.Enabled = false;
             //EditBikeButton.Enabled = false;
-            AddPlaceButton.Enabled = false;
-            DelPlaceButton.Enabled = false;
-            ShowABiPlaceButton.Enabled = false;
+            //AddPlaceButton.Enabled = false;
+            //DelPlaceButton.Enabled = false;
+            ShowABiPlaceButton.Hide();
             //ExtraCostsPage.Hide();
             //ConnectionOKLabel.Hide();
             ConnectionBrakLabel.Hide();
             ShowAllUsers();
             ShowAllBikes();
+            ShowAllPlaces();
             backgroundW.DoWork += backgroundW_DoWork;
             backgroundW.ProgressChanged += backgroundW_ProgressChanged;
             backgroundW.RunWorkerAsync();
@@ -332,7 +334,7 @@ namespace mysql
             int number=0;
             if (BikeNrTextBox.Text == "")
             {
-                MessageBox.Show("Dodanie roweru wymaga podanie jego numeru!", "Błąd");
+                MessageBox.Show("Dodanie roweru wymaga podania jego numeru!", "Błąd");
             }
             else
             {
@@ -467,11 +469,15 @@ namespace mysql
                         message += @"ID: " + rdr.GetInt32(0).ToString() + "\n"+
                             "numer roweru: " + rdr.GetInt32(3).ToString() + "\n" +
                             "wypozyczony: " + answer;
-                        try {
-                            if (rdr.GetInt32(1).ToString() != null)
-                                message += "\nID-użytkownika: " + rdr.GetInt32(1).ToString();
+                        if (answer == "Tak")
+                        {
+                            try
+                            {
+                                if (rdr.GetInt32(1).ToString() != null)
+                                    message += "\nID-użytkownika: " + rdr.GetInt32(1).ToString();
+                            }
+                            catch (Exception) { }
                         }
-                        catch (Exception) { }
                         try
                         {
                             if (rdr.GetInt32(2).ToString() != null)
@@ -550,8 +556,218 @@ namespace mysql
             
         }
 
-        
-        
+        private void ShowAllPlaces()
+        {
+            try
+            {
+                PlaceListBox.Items.Clear();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca ORDER BY nazwa", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    PlaceListBox.Items.Add(rdr.GetString(1));
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void UpdatePlaceListBox(string PlaceName)
+        {
+            if (PlaceName == "") ShowAllPlaces();
+            else
+            {
+                try
+                {
+                    PlaceListBox.Items.Clear();
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa LIKE '%" + PlaceName + "%' ORDER BY nazwa", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        PlaceListBox.Items.Add(rdr.GetString(1));
+                    }
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void PlaceNameBox_TextChanged(object sender, EventArgs e)
+        {
+            string name = "";
+            name = PlaceNameBox.Text;
+            UpdatePlaceListBox(name);
+        }
+
+        private void AddPlaceButton_Click(object sender, EventArgs e)
+        {
+            string name = "";
+            name = PlaceNameBox.Text;
+            if (name != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa='" + name + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read()) MessageBox.Show("Miejsce o podanej nazwie już istnieje!", "Błąd");
+                    else
+                    {
+                        //tutaj zapytanie dodajace uzytkownika
+
+                        rdr.Close();
+                        string insert_query = "INSERT INTO miejsca (nazwa) VALUES ('" + name + "')";
+                        MySqlCommand updateCmd = new MySqlCommand(insert_query, Form1.connection);
+                        updateCmd.ExecuteNonQuery();
+                        MessageBox.Show("Dodano miejsce o nazwie: " + name, "Gratulacje");
+                        UpdatePlaceListBox(PlaceNameBox.Text);
+                    }
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Należy podać nazwę miejsca", "Błąd");
+            }
+        }
+
+        private void DelPlaceButton_Click(object sender, EventArgs e)
+        {
+            string name = "";
+            try
+            {
+                name = PlaceListBox.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz miejsce", "Błąd");
+            }
+            if (name != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa='" + name + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        rdr.Close();
+                        //tutaj usuwanie użytkownika
+                        string delete_query = "DELETE FROM miejsca WHERE nazwa='" + name + "';";
+                        MySqlCommand updateCmd = new MySqlCommand(delete_query, Form1.connection);
+
+                        updateCmd.ExecuteNonQuery();
+                        MessageBox.Show("Usunięto miejsce " + name, "Gratulacje");
+                        UpdatePlaceListBox(PlaceNameBox.Text);
+                    }
+                    else MessageBox.Show("Nie znaleziono miejsca " + name, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void EditPlaceButton_Click(object sender, EventArgs e)
+        {
+            string name = "";
+            try
+            {
+                name = PlaceListBox.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz miejsce", "Błąd");
+            }
+            if (name != "")
+            {
+                try
+                {
+                    //znajdywanie uzytkownika w bazie danych
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa='" + name + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        Panel.epf1 = new EditPlaceForm(rdr);
+                        Panel.epf1.ShowDialog();
+                        if (epf1.edited) ShowAllPlaces();
+                        rdr.Close();
+                    }
+                    else MessageBox.Show("Nie znaleziono miejsca o nazwie: " + name, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void ShowPlaceButton_Click(object sender, EventArgs e)
+        {
+            string name = "";
+            string message = "";
+            try
+            {
+                name = PlaceListBox.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz miejsce", "Błąd");
+            }
+            if (name != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa='" + name + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        message += "ID: " + rdr.GetInt32(0).ToString() + "\nNazwa: "+rdr.GetString(1);
+                        MessageBox.Show(message, "Info");
+                    }
+                    else MessageBox.Show("Nie znaleziono miejsca " + name, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
         private void backgroundW_DoWork(object sender, DoWorkEventArgs e)
         {
             string temp;
@@ -564,10 +780,11 @@ namespace mysql
                     //backgroundW.RunWorkerAsync();
                     if (MessageBox.Show("Utracono połączenie, odnowić?", "Info", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        try {
+                        try
+                        {
                             Form1.connection.Open();
                         }
-                        catch(MySqlException ex)
+                        catch (MySqlException ex)
                         {
                             MessageBox.Show(ex.ToString(), "ERROR!");
                         }
@@ -582,11 +799,13 @@ namespace mysql
                 Thread.Sleep(1000);
             }
         }
-        
-        private void backgroundW_ProgressChanged(object sender,ProgressChangedEventArgs e)
+
+        private void backgroundW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
 
         }
+
+        
     }
 }
 
