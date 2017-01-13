@@ -16,7 +16,7 @@ namespace mysql
         public bool edited=false;
         private string login="";
         private string password="";
-        private float financial=0;
+        private decimal financial=0;
         private string status="";
         private string name = "";
         private string surname = "";
@@ -50,7 +50,7 @@ namespace mysql
             //dane = rdr;
             login = rdr.GetString(1);
             password = rdr.GetString(2);
-            financial = rdr.GetFloat(3);
+            financial = rdr.GetDecimal(3);
             status = rdr.GetString(4);
             name = rdr.GetString(5);
             surname = rdr.GetString(6);
@@ -83,9 +83,13 @@ namespace mysql
                     }
                     if (b_fin)
                     {
-                        edit_query += "stan_konta='" + EdUserFinancialTBox.Text + "' ";
+                        string temp_mon = EdUserFinancialTBox.Text;
+                        StringBuilder S = new StringBuilder(temp_mon);
+                        S.Replace(",", ".");
+                        temp_mon = S.ToString();
+                        edit_query += "stan_konta='" + temp_mon + "' ";
                         if (b_status || b_name || b_surname || b_email) edit_query += ", ";
-                        financial = float.Parse(EdUserFinancialTBox.Text);
+                        financial = decimal.Parse(EdUserFinancialTBox.Text);
                         b_fin = false;
                     }
                     if (b_status)
@@ -168,7 +172,7 @@ namespace mysql
 
         private void EdUserFinancialTBox_TextChanged(object sender, EventArgs e)
         {
-            if (financial == float.Parse(EdUserFinancialTBox.Text)) b_fin = false;
+            if (financial == decimal.Parse(EdUserFinancialTBox.Text)) b_fin = false;
             else b_fin = true;
         }
 

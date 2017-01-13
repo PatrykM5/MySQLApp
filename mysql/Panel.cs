@@ -19,6 +19,7 @@ namespace mysql
         public static AddUserForm auf1;
         public static EditBikeForm ebf1;
         public static EditPlaceForm epf1;
+        public static AddECostForm aecf1;
         //Thread t1;
         public Panel()
         {
@@ -817,7 +818,7 @@ namespace mysql
 
         private void UserLoginBox2_TextChanged(object sender, EventArgs e)
         {
-            UpdateUserListBox(UserLoginBox.Text, 2);
+            UpdateUserListBox(UserLoginBox2.Text, 2);
         }
 
         private void AddExtraCostButton_Click(object sender, EventArgs e)
@@ -826,11 +827,11 @@ namespace mysql
             int id = 0;
             try
             {
-                login = UserListBox.SelectedItem.ToString();
+                login = UserListBox2.SelectedItem.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Wybierz uzytkownika", "Błąd");
+                MessageBox.Show("Wybierz użytkownika", "Błąd");
             }
             if (login != "")
             {
@@ -842,10 +843,11 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        id = rdr.GetInt16(1);
-                        //od tego momentu dokończyć
-
+                        id = rdr.GetInt16(0);
                         rdr.Close();
+                        aecf1 = new AddECostForm(id,login,"Dodawanie kosztu dodatkowego");
+                        aecf1.ShowDialog();
+                        
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -868,12 +870,86 @@ namespace mysql
 
         private void ShowExtraCostButton_Click(object sender, EventArgs e)
         {
+            string login = "";
+            int id = 0;
+            try
+            {
+                login = UserListBox2.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz użytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    //znajdywanie uzytkownika w bazie danych
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt16(0);
+                        rdr.Close();
+                        aecf1 = new AddECostForm(id, login, "Wyświetlanie kosztów dodatkowych");
+                        aecf1.ShowDialog();
 
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
         }
 
         private void EditExtraCostButton_Click(object sender, EventArgs e)
         {
+            string login = "";
+            int id = 0;
+            try
+            {
+                login = UserListBox2.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz użytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    //znajdywanie uzytkownika w bazie danych
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt16(0);
+                        rdr.Close();
+                        aecf1 = new AddECostForm(id, login, "Edycja kosztów dodatkowych");
+                        aecf1.ShowDialog();
 
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
         }
     }
 }
