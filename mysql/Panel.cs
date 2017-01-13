@@ -33,7 +33,7 @@ namespace mysql
             //ExtraCostsPage.Hide();
             //ConnectionOKLabel.Hide();
             ConnectionBrakLabel.Hide();
-            ShowAllUsers();
+            ShowAllUsers(12);
             ShowAllBikes();
             ShowAllPlaces();
             backgroundW.DoWork += backgroundW_DoWork;
@@ -85,17 +85,29 @@ namespace mysql
         }
 
         //funkcja wypisuje wszystkich uzytkownikow do listbox'a
-        private void ShowAllUsers()
+        private void ShowAllUsers(int listbox)
         {
             try
             {
-                UserListBox.Items.Clear();
+                if(listbox==1) UserListBox.Items.Clear();
+                if (listbox == 2) UserListBox2.Items.Clear();
+                if (listbox == 12)
+                {
+                    UserListBox.Items.Clear();
+                    UserListBox2.Items.Clear();
+                }
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik ORDER BY login", Form1.connection);
                 MySqlDataReader rdr = null;
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    UserListBox.Items.Add(rdr.GetString(1));
+                    if (listbox == 1) UserListBox.Items.Add(rdr.GetString(1));
+                    if (listbox == 2) UserListBox2.Items.Add(rdr.GetString(1));
+                    if (listbox == 12)
+                    {
+                        UserListBox.Items.Add(rdr.GetString(1));
+                        UserListBox2.Items.Add(rdr.GetString(1));
+                    }
                 }
                 rdr.Close();
             }
@@ -110,18 +122,14 @@ namespace mysql
         {
             //MessageBox.Show("Panel_load");
         }
-        //funkcja wywoływana przy wciśnięciu zamknięcia okna potrzebna do zatrzymania wątku
+        //funkcja wywoływana przy wciśnięciu zamknięcia okna
         private void Panel_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show("Na pewno chcesz wyłączyć Panel?", "Info", MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 e.Cancel = true;
             }
-            else
-            {
-                //t1.Suspend();
-                //t1.Abort();
-            }
+            
         }
 
         //button - dodawania użytkownika przez otwarcie odpowiedniej Form'y
@@ -129,7 +137,7 @@ namespace mysql
         {
             Panel.auf1 = new AddUserForm();
             Panel.auf1.ShowDialog();
-            if (auf1.added) ShowAllUsers();
+            if (auf1.added) ShowAllUsers(12);
         }
 
         //button - usuwanie użytkownika
@@ -160,7 +168,7 @@ namespace mysql
 
                         updateCmd.ExecuteNonQuery();
                         MessageBox.Show("Usunięto użytkownika "+login,"Gratulacje");
-                        UpdateUserListBox(UserLoginBox.Text);
+                        UpdateUserListBox(UserLoginBox.Text,1);
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika "+login, "Błąd");
                     rdr.Close();
@@ -228,7 +236,7 @@ namespace mysql
         {
             Panel.euf1 = new EditUserForm(rdr);
             Panel.euf1.ShowDialog();
-            if (euf1.edited) ShowAllUsers();
+            if (euf1.edited) ShowAllUsers(12);
         }
 
         //button - edytowanie użytkownika oraz pobranie jego danych z serwera
@@ -271,20 +279,22 @@ namespace mysql
         }
 
         //funkcja uaktualnia listę użytkowników
-        private void UpdateUserListBox(string UserName)
+        private void UpdateUserListBox(string UserName,int listbox)
         {
-            if (UserName == "") ShowAllUsers();
+            if (UserName == "") ShowAllUsers(listbox);
             else
             {
                 try
                 {
-                    UserListBox.Items.Clear();
+                    if(listbox==1) UserListBox.Items.Clear();
+                    if (listbox == 2) UserListBox2.Items.Clear();
                     MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login LIKE '%" + UserName + "%' ORDER BY login", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        UserListBox.Items.Add(rdr.GetString(1));
+                        if(listbox==1) UserListBox.Items.Add(rdr.GetString(1));
+                        if (listbox == 2) UserListBox2.Items.Add(rdr.GetString(1));
                     }
                     rdr.Close();
                 }
@@ -298,7 +308,7 @@ namespace mysql
         //textchanged - podczas wpisywania nazwy użytkownika wywołuje funkcje
         private void UserLoginBox_TextChanged(object sender, EventArgs e)
         {
-            UpdateUserListBox(UserLoginBox.Text);
+            UpdateUserListBox(UserLoginBox.Text,1);
         }
 
         //nie używane
@@ -805,7 +815,66 @@ namespace mysql
 
         }
 
-        
+        private void UserLoginBox2_TextChanged(object sender, EventArgs e)
+        {
+            UpdateUserListBox(UserLoginBox.Text, 2);
+        }
+
+        private void AddExtraCostButton_Click(object sender, EventArgs e)
+        {
+            string login = "";
+            int id = 0;
+            try
+            {
+                login = UserListBox.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz uzytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    //znajdywanie uzytkownika w bazie danych
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt16(1);
+                        //od tego momentu dokończyć
+
+                        rdr.Close();
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void DelExtraCostButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ShowExtraCostButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EditExtraCostButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

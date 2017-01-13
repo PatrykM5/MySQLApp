@@ -48,8 +48,6 @@
             this.ShowABiPlaceButton = new System.Windows.Forms.Button();
             this.DelPlaceButton = new System.Windows.Forms.Button();
             this.AddPlaceButton = new System.Windows.Forms.Button();
-            this.ExtraCostsPage = new System.Windows.Forms.TabPage();
-            this.PaymentPage = new System.Windows.Forms.TabPage();
             this.BikesPage = new System.Windows.Forms.TabPage();
             this.BikeListLabel = new System.Windows.Forms.Label();
             this.BikeListBox = new System.Windows.Forms.ListBox();
@@ -59,16 +57,27 @@
             this.ShowBikeButton = new System.Windows.Forms.Button();
             this.DelBikeButton = new System.Windows.Forms.Button();
             this.AddBikeButton = new System.Windows.Forms.Button();
+            this.ExtraCostsPage = new System.Windows.Forms.TabPage();
+            this.PaymentPage = new System.Windows.Forms.TabPage();
             this.RentsPage = new System.Windows.Forms.TabPage();
             this.AdminsPage = new System.Windows.Forms.TabPage();
             this.ConStatusLabel = new System.Windows.Forms.Label();
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
             this.backgroundW = new System.ComponentModel.BackgroundWorker();
+            this.AddExtraCostButton = new System.Windows.Forms.Button();
+            this.DelExtraCostButton = new System.Windows.Forms.Button();
+            this.ShowExtraCostButton = new System.Windows.Forms.Button();
+            this.EditExtraCostButton = new System.Windows.Forms.Button();
+            this.UserLoginBox2 = new System.Windows.Forms.TextBox();
+            this.UserName2 = new System.Windows.Forms.Label();
+            this.OutUsers2 = new System.Windows.Forms.Label();
+            this.UserListBox2 = new System.Windows.Forms.ListBox();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
             this.BikesPage.SuspendLayout();
+            this.ExtraCostsPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // PanelControl
@@ -282,26 +291,6 @@
             this.AddPlaceButton.UseVisualStyleBackColor = true;
             this.AddPlaceButton.Click += new System.EventHandler(this.AddPlaceButton_Click);
             // 
-            // ExtraCostsPage
-            // 
-            this.ExtraCostsPage.Location = new System.Drawing.Point(4, 22);
-            this.ExtraCostsPage.Name = "ExtraCostsPage";
-            this.ExtraCostsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ExtraCostsPage.Size = new System.Drawing.Size(513, 310);
-            this.ExtraCostsPage.TabIndex = 2;
-            this.ExtraCostsPage.Text = "Koszty dodatkowe";
-            this.ExtraCostsPage.UseVisualStyleBackColor = true;
-            // 
-            // PaymentPage
-            // 
-            this.PaymentPage.Location = new System.Drawing.Point(4, 22);
-            this.PaymentPage.Name = "PaymentPage";
-            this.PaymentPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PaymentPage.Size = new System.Drawing.Size(513, 310);
-            this.PaymentPage.TabIndex = 3;
-            this.PaymentPage.Text = "Wpłaty";
-            this.PaymentPage.UseVisualStyleBackColor = true;
-            // 
             // BikesPage
             // 
             this.BikesPage.Controls.Add(this.BikeListLabel);
@@ -394,6 +383,34 @@
             this.AddBikeButton.UseVisualStyleBackColor = true;
             this.AddBikeButton.Click += new System.EventHandler(this.AddBikeButton_Click);
             // 
+            // ExtraCostsPage
+            // 
+            this.ExtraCostsPage.Controls.Add(this.UserListBox2);
+            this.ExtraCostsPage.Controls.Add(this.OutUsers2);
+            this.ExtraCostsPage.Controls.Add(this.UserName2);
+            this.ExtraCostsPage.Controls.Add(this.UserLoginBox2);
+            this.ExtraCostsPage.Controls.Add(this.EditExtraCostButton);
+            this.ExtraCostsPage.Controls.Add(this.ShowExtraCostButton);
+            this.ExtraCostsPage.Controls.Add(this.DelExtraCostButton);
+            this.ExtraCostsPage.Controls.Add(this.AddExtraCostButton);
+            this.ExtraCostsPage.Location = new System.Drawing.Point(4, 22);
+            this.ExtraCostsPage.Name = "ExtraCostsPage";
+            this.ExtraCostsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ExtraCostsPage.Size = new System.Drawing.Size(513, 310);
+            this.ExtraCostsPage.TabIndex = 2;
+            this.ExtraCostsPage.Text = "Koszty dodatkowe";
+            this.ExtraCostsPage.UseVisualStyleBackColor = true;
+            // 
+            // PaymentPage
+            // 
+            this.PaymentPage.Location = new System.Drawing.Point(4, 22);
+            this.PaymentPage.Name = "PaymentPage";
+            this.PaymentPage.Padding = new System.Windows.Forms.Padding(3);
+            this.PaymentPage.Size = new System.Drawing.Size(513, 310);
+            this.PaymentPage.TabIndex = 3;
+            this.PaymentPage.Text = "Wpłaty";
+            this.PaymentPage.UseVisualStyleBackColor = true;
+            // 
             // RentsPage
             // 
             this.RentsPage.Location = new System.Drawing.Point(4, 22);
@@ -447,6 +464,80 @@
             // 
             this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
             // 
+            // AddExtraCostButton
+            // 
+            this.AddExtraCostButton.Location = new System.Drawing.Point(38, 41);
+            this.AddExtraCostButton.Name = "AddExtraCostButton";
+            this.AddExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.AddExtraCostButton.TabIndex = 0;
+            this.AddExtraCostButton.Text = "Nałóż koszty dodatkowe";
+            this.AddExtraCostButton.UseVisualStyleBackColor = true;
+            this.AddExtraCostButton.Click += new System.EventHandler(this.AddExtraCostButton_Click);
+            // 
+            // DelExtraCostButton
+            // 
+            this.DelExtraCostButton.Location = new System.Drawing.Point(38, 82);
+            this.DelExtraCostButton.Name = "DelExtraCostButton";
+            this.DelExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.DelExtraCostButton.TabIndex = 1;
+            this.DelExtraCostButton.Text = "Usuń koszty dodatkowy";
+            this.DelExtraCostButton.UseVisualStyleBackColor = true;
+            this.DelExtraCostButton.Click += new System.EventHandler(this.DelExtraCostButton_Click);
+            // 
+            // ShowExtraCostButton
+            // 
+            this.ShowExtraCostButton.Location = new System.Drawing.Point(38, 123);
+            this.ShowExtraCostButton.Name = "ShowExtraCostButton";
+            this.ShowExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.ShowExtraCostButton.TabIndex = 2;
+            this.ShowExtraCostButton.Text = "Wyświetl dane kosztów";
+            this.ShowExtraCostButton.UseVisualStyleBackColor = true;
+            this.ShowExtraCostButton.Click += new System.EventHandler(this.ShowExtraCostButton_Click);
+            // 
+            // EditExtraCostButton
+            // 
+            this.EditExtraCostButton.Location = new System.Drawing.Point(38, 164);
+            this.EditExtraCostButton.Name = "EditExtraCostButton";
+            this.EditExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.EditExtraCostButton.TabIndex = 3;
+            this.EditExtraCostButton.Text = "Edytuj koszty dodatkowe";
+            this.EditExtraCostButton.UseVisualStyleBackColor = true;
+            this.EditExtraCostButton.Click += new System.EventHandler(this.EditExtraCostButton_Click);
+            // 
+            // UserLoginBox2
+            // 
+            this.UserLoginBox2.Location = new System.Drawing.Point(275, 41);
+            this.UserLoginBox2.Name = "UserLoginBox2";
+            this.UserLoginBox2.Size = new System.Drawing.Size(152, 20);
+            this.UserLoginBox2.TabIndex = 4;
+            this.UserLoginBox2.TextChanged += new System.EventHandler(this.UserLoginBox2_TextChanged);
+            // 
+            // UserName2
+            // 
+            this.UserName2.AutoSize = true;
+            this.UserName2.Location = new System.Drawing.Point(272, 25);
+            this.UserName2.Name = "UserName2";
+            this.UserName2.Size = new System.Drawing.Size(155, 13);
+            this.UserName2.TabIndex = 5;
+            this.UserName2.Text = "Szukaj użytkownika po nazwie:";
+            // 
+            // OutUsers2
+            // 
+            this.OutUsers2.AutoSize = true;
+            this.OutUsers2.Location = new System.Drawing.Point(272, 93);
+            this.OutUsers2.Name = "OutUsers2";
+            this.OutUsers2.Size = new System.Drawing.Size(110, 13);
+            this.OutUsers2.TabIndex = 6;
+            this.OutUsers2.Text = "Wybierz użytkownika:";
+            // 
+            // UserListBox2
+            // 
+            this.UserListBox2.FormattingEnabled = true;
+            this.UserListBox2.Location = new System.Drawing.Point(275, 109);
+            this.UserListBox2.Name = "UserListBox2";
+            this.UserListBox2.Size = new System.Drawing.Size(152, 173);
+            this.UserListBox2.TabIndex = 7;
+            // 
             // Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -469,6 +560,8 @@
             this.PlacesPage.PerformLayout();
             this.BikesPage.ResumeLayout(false);
             this.BikesPage.PerformLayout();
+            this.ExtraCostsPage.ResumeLayout(false);
+            this.ExtraCostsPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,5 +606,13 @@
         private System.Windows.Forms.Label PlaceNameLabel;
         private System.Windows.Forms.TextBox PlaceNameBox;
         private System.Windows.Forms.Button ShowPlaceButton;
+        private System.Windows.Forms.ListBox UserListBox2;
+        private System.Windows.Forms.Label OutUsers2;
+        private System.Windows.Forms.Label UserName2;
+        private System.Windows.Forms.TextBox UserLoginBox2;
+        private System.Windows.Forms.Button EditExtraCostButton;
+        private System.Windows.Forms.Button ShowExtraCostButton;
+        private System.Windows.Forms.Button DelExtraCostButton;
+        private System.Windows.Forms.Button AddExtraCostButton;
     }
 }
