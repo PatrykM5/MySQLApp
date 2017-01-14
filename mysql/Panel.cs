@@ -31,6 +31,7 @@ namespace mysql
             //AddPlaceButton.Enabled = false;
             //DelPlaceButton.Enabled = false;
             ShowABiPlaceButton.Hide();
+            DelExtraCostButton.Hide();
             //ExtraCostsPage.Hide();
             //ConnectionOKLabel.Hide();
             ConnectionBrakLabel.Hide();
@@ -206,6 +207,9 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
+                        edit_user_data(rdr,"Wyświetl dane użytkownika");
+                        rdr.Close();
+                        /*
                         //wypisywanie danych użytkownika w messagebox
                         MessageBox.Show(@"ID: " + rdr.GetInt32(0).ToString() + "\n" +
                             "login: " + rdr.GetString(1) + "\n" +
@@ -215,6 +219,7 @@ namespace mysql
                             "imię: "+rdr.GetString(5)+"\n"+
                             "nazwisko: "+rdr.GetString(6)+"\n"+
                             "e-mail: "+rdr.GetString(7),"Info");
+                            */
                     }
 
                     else MessageBox.Show("Nie znaleziono użytkownika "+login,"Błąd");
@@ -230,12 +235,13 @@ namespace mysql
                     MessageBox.Show(ex.ToString(),"ERROR");
                 }
             }
+            
         }
 
         //funkcja edycji użytkownika
-        private void edit_user_data(MySqlDataReader rdr)
+        private void edit_user_data(MySqlDataReader rdr, string s)
         {
-            Panel.euf1 = new EditUserForm(rdr);
+            Panel.euf1 = new EditUserForm(rdr,s);
             Panel.euf1.ShowDialog();
             if (euf1.edited) ShowAllUsers(12);
         }
@@ -262,7 +268,7 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        edit_user_data(rdr);
+                        edit_user_data(rdr,"Edytuj dane użytkownika");
                         rdr.Close();
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika "+login,"Błąd");
@@ -475,6 +481,9 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
+                        Panel.ebf1 = new EditBikeForm(rdr, "Wyświetl dane roweru");
+                        Panel.ebf1.ShowDialog();
+                        /*
                         if (rdr.GetInt16(4).ToString() == "1") answer = "Tak";
                         else answer = "Nie";
                         message += @"ID: " + rdr.GetInt32(0).ToString() + "\n"+
@@ -498,11 +507,8 @@ namespace mysql
                         //wypisywanie danych użytkownika w messagebox
                        
                         
-                            MessageBox.Show(message/*"ID: " + rdr.GetInt32(0).ToString() + "\n" +
-                            "ID-użytkownika: " + rdr.GetInt32(1).ToString() + "\n" +
-                            "ID-miejsca: " + rdr.GetInt32(2).ToString() + "\n" +
-                            "numer roweru: " + rdr.GetInt32(3).ToString() + "\n" +
-                            "wypozyczony: " +  answer*/, "Info");
+                            MessageBox.Show(message, "Info");
+                            */
                     }
 
                     else MessageBox.Show("Nie znaleziono użytkownika " + UserLoginBox.Text, "Błąd");
@@ -547,7 +553,7 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        Panel.ebf1 = new EditBikeForm(rdr);
+                        Panel.ebf1 = new EditBikeForm(rdr,"Edytuj dane roweru");
                         Panel.ebf1.ShowDialog();
                         if (ebf1.edited) ShowAllBikes();
                         rdr.Close();
@@ -722,7 +728,7 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        Panel.epf1 = new EditPlaceForm(rdr);
+                        Panel.epf1 = new EditPlaceForm(rdr,"Edytuj dane miejsca");
                         Panel.epf1.ShowDialog();
                         if (epf1.edited) ShowAllPlaces();
                         rdr.Close();
@@ -762,8 +768,13 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
+                        /*
+                        //wypisanie danych miejsca w messagebox'ie
                         message += "ID: " + rdr.GetInt32(0).ToString() + "\nNazwa: "+rdr.GetString(1);
                         MessageBox.Show(message, "Info");
+                        */
+                        Panel.epf1 = new EditPlaceForm(rdr, "Wyświetl dane miejsca");
+                        Panel.epf1.ShowDialog();
                     }
                     else MessageBox.Show("Nie znaleziono miejsca " + name, "Błąd");
                     rdr.Close();
@@ -781,14 +792,23 @@ namespace mysql
 
         private void backgroundW_DoWork(object sender, DoWorkEventArgs e)
         {
+            Action updateAction1 = new Action(ConnectionBrakLabel.Show);
+            Action updateAction2 = new Action(ConnectionBrakLabel.Hide);
             string temp;
+            bool changed=false;
+            bool temp_b = false;
             while (true)
             {
+                //Form1.connection.Ping();
                 temp = Form1.connection.State.ToString();
                 if (temp != "Open")
                 {
+                    temp_b = connected;
                     connected = false;
+                    if (connected == temp_b) changed = false;
+                    else changed = true;
                     //backgroundW.RunWorkerAsync();
+                    if(changed) ConnectionBrakLabel.Invoke(updateAction1);
                     if (MessageBox.Show("Utracono połączenie, odnowić?", "Info", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         try
@@ -807,7 +827,15 @@ namespace mysql
                     }
 
                 }
-                Thread.Sleep(1000);
+                else 
+                {
+                    temp_b = connected;
+                    connected = true;
+                    if (connected == temp_b) changed = false;
+                    else changed = true;
+                    if (changed) ConnectionBrakLabel.Invoke(updateAction2);
+                }
+                Thread.Sleep(5000);
             }
         }
 
@@ -862,7 +890,7 @@ namespace mysql
                 }
             }
         }
-
+        //nie używany, schowany button
         private void DelExtraCostButton_Click(object sender, EventArgs e)
         {
 

@@ -21,20 +21,28 @@ namespace mysql
         private string name = "";
         private string surname = "";
         private string email = "";
+        private int id = 0;
         //private MySqlDataReader dane;
-        public EditUserForm(MySqlDataReader rdr)
+        public EditUserForm(MySqlDataReader rdr,string formname)
         {
             InitializeComponent();
-            //EditUserDataButton.Enabled = false;
-            //EdUserLoginTBox.Enabled = false;
-            //EdUserPassTBox.Enabled = false;
-            //EdUserFinancialTBox.Enabled = false;
-            //EdUserStatusCBox.Enabled = false;
-            //EdUserMailTBox.Enabled = false;
-            //EdUserNameTBox.Enabled = false;
-            //EdUserSurnameTBox.Enabled = false;
+            this.Text = formname;
+            if (formname == "Wyświetl dane użytkownika")
+            {
+                EditUserDataButton.Hide();
+                OKButton.Hide();
+                CancelButton.Text = "OK";
+                EdUserLoginTBox.Enabled = false;
+                EdUserPassTBox.Enabled = false;
+                EdUserFinancialTBox.Enabled = false;
+                EdUserStatusCBox.Enabled = false;
+                EdUserMailTBox.Enabled = false;
+                EdUserNameTBox.Enabled = false;
+                EdUserSurnameTBox.Enabled = false;
+            }
             ImportData(rdr);
             rdr.Close();
+            IDLabel.Text += " "+id;
             EdUserLoginTBox.Text = login;
             EdUserPassTBox.Text = password;
             EdUserFinancialTBox.Text = financial.ToString();
@@ -48,6 +56,7 @@ namespace mysql
         private void ImportData(MySqlDataReader rdr)
         {
             //dane = rdr;
+            id = rdr.GetInt32(0);
             login = rdr.GetString(1);
             password = rdr.GetString(2);
             financial = rdr.GetDecimal(3);

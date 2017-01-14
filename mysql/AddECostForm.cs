@@ -16,7 +16,7 @@ namespace mysql
         private int id_user;
         private int id_cost;
         private string login;
-        private decimal money;
+        private decimal money,topay=0;
         private DateTime date;
         private bool paid,paid_old;
         private string description="";
@@ -68,7 +68,8 @@ namespace mysql
                 rdr = cmd.ExecuteReader();
                 if (rdr.Read())
                 {
-                    id_cost = rdr.GetInt16(0);
+                    if (rdr.GetInt16(5) == 0) topay += rdr.GetDecimal(2);
+                    id_cost = rdr.GetInt32(0);
                     IDComboBox.Items.Add(id_cost);
                     //id_user = rdr.GetInt16(1);
                     //money = rdr.GetFloat(2);
@@ -83,8 +84,10 @@ namespace mysql
                     while (rdr.Read())
                     {
                         IDComboBox.Items.Add(rdr.GetString(0));
+                        if(rdr.GetInt16(5)==0) topay+=rdr.GetDecimal(2);
                     }
                     rdr.Close();
+                    ToPayLabel.Text = "Do zapłacenia przez użytkownika: " + topay.ToString();
                     IDComboBox.SelectedIndex=IDComboBox.FindStringExact(id_cost.ToString());
                 } else
                 {
@@ -133,6 +136,7 @@ namespace mysql
 
         private void EditECost()
         {
+            decimal temp_d=money;
             if (!b_money && !b_date && !b_desc && !b_paid) MessageBox.Show("Nic nie zostało zmienione", "Info");
             else
             {
@@ -148,8 +152,8 @@ namespace mysql
                         //MessageBox.Show(temp_mon);
                         edit_query += "kwota='" + temp_mon+"'";
                         if (b_date || b_desc || b_paid) edit_query += ", ";
+                        //temp_d= money;
                         money = MoneyBox.Value;
-                        b_money = false;
                     }
                     if (b_date)
                     {
@@ -171,15 +175,27 @@ namespace mysql
                         {
                             temp = 0;
                             paid = false;
+                            topay += temp_d;
                         }
-                        else { temp = 1; paid = true; }
+                        else { temp = 1; paid = true; topay -= temp_d; }
                         edit_query += "zaplacone=" + temp.ToString();
-                        b_paid = false;
                         paid_old = paid;
                     }
                     edit_query += " WHERE id_koszt='" + id_cost.ToString() + "';";
                     MySqlCommand updateCmd = new MySqlCommand(edit_query, Form1.connection);
                     updateCmd.ExecuteNonQuery();
+                    if (b_money)
+                    {
+                        topay -= temp_d;
+                        topay += money;
+                        if(!paid) ToPayLabel.Text = "Do zapłacenia przez użytkownika: " + topay.ToString();
+                        b_money = false;
+                    }
+                    if (b_paid)
+                    {
+                        ToPayLabel.Text = "Do zapłacenia przez użytkownika: " + topay.ToString();
+                        b_paid = false;
+                    }
                     MessageBox.Show("Edytowano dane kosztu", "Gratulacje");
                 }
                 catch (MySqlException ex)
@@ -236,24 +252,26 @@ namespace mysql
 
         private void NoRButton_CheckedChanged(object sender, EventArgs e)
         {
-            bool temp = NoRButton.Checked;
-            if (temp)
+            bool tempN = NoRButton.Checked;
+            if (tempN)
             {
                 paid = false;
+                //MessageBox.Show("zmiana N");
+                if (paid_old == paid) b_paid = false;
+                else b_paid = true;
             }
-            if (paid_old == paid) b_paid = false;
-            else b_paid = true;
         }
 
         private void YesRButton_CheckedChanged(object sender, EventArgs e)
         {
-            bool temp = YesRButton.Checked;
-            if (temp)
+            bool tempY = YesRButton.Checked;
+            if (tempY)
             {
                 paid = true;
+                //MessageBox.Show("zmiana Y");
+                if (paid_old == paid) b_paid = false;
+                else b_paid = true;
             }
-            if (paid_old == paid) b_paid = false;
-            else b_paid = true;
         }
 
         private void ChangedID(string id_s)
@@ -278,8 +296,9 @@ namespace mysql
                     description = rdr.GetString(4);
                     DescriptionBox.Text = description;
                     temp_b = rdr.GetInt16(5);
-                    if (temp_b == 1) YesRButton.Checked = true;
-                    else NoRButton.Checked = true;
+                    if (temp_b == 1) { YesRButton.Checked = true; paid = true; }
+                    else { NoRButton.Checked = true; paid = false; }
+                    paid_old = paid;
                     rdr.Close();
                 }
                 else

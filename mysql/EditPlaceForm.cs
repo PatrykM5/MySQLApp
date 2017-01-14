@@ -17,12 +17,21 @@ namespace mysql
         private int id = 0;
         public bool edited = false;
         private bool b_name = false;
-        public EditPlaceForm(MySqlDataReader rdr)
+        public EditPlaceForm(MySqlDataReader rdr,string formname)
         {
             InitializeComponent();
+            this.Text = formname;
+            if(formname=="Wyświetl dane miejsca")
+            {
+                OKButton.Hide();
+                ApplyButton.Hide();
+                CancelButton.Text = "OK";
+                PlaceNameBox.Enabled = false;
+            }
             id = rdr.GetInt16(0);
             name = rdr.GetString(1);
             PlaceNameBox.Text = name;
+            IDLabel.Text += "  "+id;
             rdr.Close();
         }
 

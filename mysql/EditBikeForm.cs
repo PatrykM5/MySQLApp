@@ -14,24 +14,40 @@ namespace mysql
     public partial class EditBikeForm : Form
     {
         public bool edited = false;
+        private int id = 0;
         private int number = 0;
         private int id_place = 0;
         private int id_user = 0;
         private string place = "";
         private string user_login = "";
         private bool rent = false;
-        public EditBikeForm(MySqlDataReader rdr)
+        private bool edit_mode = true;
+        public EditBikeForm(MySqlDataReader rdr,string formname)
         {
             InitializeComponent();
+            this.Text = formname;
+            if(formname=="Wyświetl dane roweru")
+            {
+                EdBikeNumTBox.Enabled = false;
+                EdBikePlaceCBox.Enabled = false;
+                RentYesRButton.Enabled = false;
+                RentNoRButton.Enabled = false;
+                EdBikeUsLoginCBox.Enabled = false;
+                OKButton.Hide();
+                EditBikeButton.Hide();
+                CancelButton.Text = "OK";
+                edit_mode = false;
+            }
             ImportData(rdr);
             rdr.Close();
             AddAllPlaces();
+            IDLabel.Text += "  " + id;
             EdBikeNumTBox.Text = number.ToString();
             if (rent)
             {
                 RentYesRButton.Checked = true;
                 RentNoRButton.Checked = false;
-                EdBikeUsLoginCBox.Enabled = true;
+                //EdBikeUsLoginCBox.Enabled = true;
                 AddAllUsers();
                 SelectUser(id_user);
                 EdBikeUsLoginCBox.SelectedIndex = EdBikeUsLoginCBox.FindStringExact(user_login);
@@ -49,6 +65,7 @@ namespace mysql
 
         private void ImportData(MySqlDataReader rdr)
         {
+            id = rdr.GetInt32(0);
             number = rdr.GetInt32(3);
             if (rdr.GetInt16(4) == 1) rent = true;
             else rent = false;
@@ -352,7 +369,7 @@ namespace mysql
             else b_rent = true;
             if (temp)
             {
-                EdBikeUsLoginCBox.Enabled = true;
+                if(edit_mode) EdBikeUsLoginCBox.Enabled = true;
                 if (rent_ch)
                 {
                     EdBikeUsLoginCBox.Items.Clear();

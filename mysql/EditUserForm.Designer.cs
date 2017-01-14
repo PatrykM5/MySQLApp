@@ -45,6 +45,7 @@
             this.UserSurnameLabel = new System.Windows.Forms.Label();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.IDLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // EditUserDataButton
@@ -59,7 +60,7 @@
             // 
             // EdUserLoginTBox
             // 
-            this.EdUserLoginTBox.Location = new System.Drawing.Point(105, 22);
+            this.EdUserLoginTBox.Location = new System.Drawing.Point(108, 51);
             this.EdUserLoginTBox.Name = "EdUserLoginTBox";
             this.EdUserLoginTBox.Size = new System.Drawing.Size(160, 20);
             this.EdUserLoginTBox.TabIndex = 6;
@@ -67,7 +68,7 @@
             // 
             // EdUserPassTBox
             // 
-            this.EdUserPassTBox.Location = new System.Drawing.Point(105, 48);
+            this.EdUserPassTBox.Location = new System.Drawing.Point(108, 77);
             this.EdUserPassTBox.Name = "EdUserPassTBox";
             this.EdUserPassTBox.Size = new System.Drawing.Size(160, 20);
             this.EdUserPassTBox.TabIndex = 7;
@@ -75,7 +76,7 @@
             // 
             // EdUserFinancialTBox
             // 
-            this.EdUserFinancialTBox.Location = new System.Drawing.Point(105, 75);
+            this.EdUserFinancialTBox.Location = new System.Drawing.Point(108, 104);
             this.EdUserFinancialTBox.Name = "EdUserFinancialTBox";
             this.EdUserFinancialTBox.Size = new System.Drawing.Size(160, 20);
             this.EdUserFinancialTBox.TabIndex = 8;
@@ -89,7 +90,7 @@
             "Aktywny",
             "Nieaktywny",
             "Zablokowany"});
-            this.EdUserStatusCBox.Location = new System.Drawing.Point(105, 104);
+            this.EdUserStatusCBox.Location = new System.Drawing.Point(108, 133);
             this.EdUserStatusCBox.Name = "EdUserStatusCBox";
             this.EdUserStatusCBox.Size = new System.Drawing.Size(160, 21);
             this.EdUserStatusCBox.TabIndex = 10;
@@ -98,7 +99,7 @@
             // UserLoginLabel
             // 
             this.UserLoginLabel.AutoSize = true;
-            this.UserLoginLabel.Location = new System.Drawing.Point(63, 25);
+            this.UserLoginLabel.Location = new System.Drawing.Point(66, 54);
             this.UserLoginLabel.Name = "UserLoginLabel";
             this.UserLoginLabel.Size = new System.Drawing.Size(36, 13);
             this.UserLoginLabel.TabIndex = 12;
@@ -107,7 +108,7 @@
             // UserPassLabel
             // 
             this.UserPassLabel.AutoSize = true;
-            this.UserPassLabel.Location = new System.Drawing.Point(60, 51);
+            this.UserPassLabel.Location = new System.Drawing.Point(63, 80);
             this.UserPassLabel.Name = "UserPassLabel";
             this.UserPassLabel.Size = new System.Drawing.Size(39, 13);
             this.UserPassLabel.TabIndex = 13;
@@ -116,7 +117,7 @@
             // UserFinancialLabel
             // 
             this.UserFinancialLabel.AutoSize = true;
-            this.UserFinancialLabel.Location = new System.Drawing.Point(37, 78);
+            this.UserFinancialLabel.Location = new System.Drawing.Point(40, 107);
             this.UserFinancialLabel.Name = "UserFinancialLabel";
             this.UserFinancialLabel.Size = new System.Drawing.Size(62, 13);
             this.UserFinancialLabel.TabIndex = 14;
@@ -125,7 +126,7 @@
             // UserStatusLabel
             // 
             this.UserStatusLabel.AutoSize = true;
-            this.UserStatusLabel.Location = new System.Drawing.Point(59, 107);
+            this.UserStatusLabel.Location = new System.Drawing.Point(62, 136);
             this.UserStatusLabel.Name = "UserStatusLabel";
             this.UserStatusLabel.Size = new System.Drawing.Size(40, 13);
             this.UserStatusLabel.TabIndex = 15;
@@ -133,7 +134,7 @@
             // 
             // EdUserMailTBox
             // 
-            this.EdUserMailTBox.Location = new System.Drawing.Point(105, 132);
+            this.EdUserMailTBox.Location = new System.Drawing.Point(108, 161);
             this.EdUserMailTBox.Name = "EdUserMailTBox";
             this.EdUserMailTBox.Size = new System.Drawing.Size(160, 20);
             this.EdUserMailTBox.TabIndex = 16;
@@ -142,7 +143,7 @@
             // UserMailLabel
             // 
             this.UserMailLabel.AutoSize = true;
-            this.UserMailLabel.Location = new System.Drawing.Point(64, 135);
+            this.UserMailLabel.Location = new System.Drawing.Point(67, 164);
             this.UserMailLabel.Name = "UserMailLabel";
             this.UserMailLabel.Size = new System.Drawing.Size(37, 13);
             this.UserMailLabel.TabIndex = 17;
@@ -150,7 +151,7 @@
             // 
             // EdUserNameTBox
             // 
-            this.EdUserNameTBox.Location = new System.Drawing.Point(105, 159);
+            this.EdUserNameTBox.Location = new System.Drawing.Point(108, 188);
             this.EdUserNameTBox.Name = "EdUserNameTBox";
             this.EdUserNameTBox.Size = new System.Drawing.Size(160, 20);
             this.EdUserNameTBox.TabIndex = 18;
@@ -159,7 +160,7 @@
             // UserNameLabel
             // 
             this.UserNameLabel.AutoSize = true;
-            this.UserNameLabel.Location = new System.Drawing.Point(70, 162);
+            this.UserNameLabel.Location = new System.Drawing.Point(73, 191);
             this.UserNameLabel.Name = "UserNameLabel";
             this.UserNameLabel.Size = new System.Drawing.Size(29, 13);
             this.UserNameLabel.TabIndex = 19;
@@ -167,7 +168,7 @@
             // 
             // EdUserSurnameTBox
             // 
-            this.EdUserSurnameTBox.Location = new System.Drawing.Point(105, 186);
+            this.EdUserSurnameTBox.Location = new System.Drawing.Point(108, 215);
             this.EdUserSurnameTBox.Name = "EdUserSurnameTBox";
             this.EdUserSurnameTBox.Size = new System.Drawing.Size(160, 20);
             this.EdUserSurnameTBox.TabIndex = 20;
@@ -176,7 +177,7 @@
             // UserSurnameLabel
             // 
             this.UserSurnameLabel.AutoSize = true;
-            this.UserSurnameLabel.Location = new System.Drawing.Point(43, 189);
+            this.UserSurnameLabel.Location = new System.Drawing.Point(46, 218);
             this.UserSurnameLabel.Name = "UserSurnameLabel";
             this.UserSurnameLabel.Size = new System.Drawing.Size(56, 13);
             this.UserSurnameLabel.TabIndex = 21;
@@ -202,11 +203,21 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
+            // IDLabel
+            // 
+            this.IDLabel.AutoSize = true;
+            this.IDLabel.Location = new System.Drawing.Point(21, 26);
+            this.IDLabel.Name = "IDLabel";
+            this.IDLabel.Size = new System.Drawing.Size(83, 13);
+            this.IDLabel.TabIndex = 24;
+            this.IDLabel.Text = "ID użytkownika:";
+            // 
             // EditUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 323);
+            this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.UserSurnameLabel);
@@ -249,5 +260,6 @@
         private System.Windows.Forms.Label UserSurnameLabel;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Label IDLabel;
     }
 }

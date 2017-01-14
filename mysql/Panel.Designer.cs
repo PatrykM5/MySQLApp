@@ -58,6 +58,14 @@
             this.DelBikeButton = new System.Windows.Forms.Button();
             this.AddBikeButton = new System.Windows.Forms.Button();
             this.ExtraCostsPage = new System.Windows.Forms.TabPage();
+            this.UserListBox2 = new System.Windows.Forms.ListBox();
+            this.OutUsers2 = new System.Windows.Forms.Label();
+            this.UserName2 = new System.Windows.Forms.Label();
+            this.UserLoginBox2 = new System.Windows.Forms.TextBox();
+            this.EditExtraCostButton = new System.Windows.Forms.Button();
+            this.ShowExtraCostButton = new System.Windows.Forms.Button();
+            this.DelExtraCostButton = new System.Windows.Forms.Button();
+            this.AddExtraCostButton = new System.Windows.Forms.Button();
             this.PaymentPage = new System.Windows.Forms.TabPage();
             this.RentsPage = new System.Windows.Forms.TabPage();
             this.AdminsPage = new System.Windows.Forms.TabPage();
@@ -65,14 +73,6 @@
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
             this.backgroundW = new System.ComponentModel.BackgroundWorker();
-            this.AddExtraCostButton = new System.Windows.Forms.Button();
-            this.DelExtraCostButton = new System.Windows.Forms.Button();
-            this.ShowExtraCostButton = new System.Windows.Forms.Button();
-            this.EditExtraCostButton = new System.Windows.Forms.Button();
-            this.UserLoginBox2 = new System.Windows.Forms.TextBox();
-            this.UserName2 = new System.Windows.Forms.Label();
-            this.OutUsers2 = new System.Windows.Forms.Label();
-            this.UserListBox2 = new System.Windows.Forms.ListBox();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
@@ -401,6 +401,80 @@
             this.ExtraCostsPage.Text = "Koszty dodatkowe";
             this.ExtraCostsPage.UseVisualStyleBackColor = true;
             // 
+            // UserListBox2
+            // 
+            this.UserListBox2.FormattingEnabled = true;
+            this.UserListBox2.Location = new System.Drawing.Point(275, 109);
+            this.UserListBox2.Name = "UserListBox2";
+            this.UserListBox2.Size = new System.Drawing.Size(152, 173);
+            this.UserListBox2.TabIndex = 7;
+            // 
+            // OutUsers2
+            // 
+            this.OutUsers2.AutoSize = true;
+            this.OutUsers2.Location = new System.Drawing.Point(272, 93);
+            this.OutUsers2.Name = "OutUsers2";
+            this.OutUsers2.Size = new System.Drawing.Size(110, 13);
+            this.OutUsers2.TabIndex = 6;
+            this.OutUsers2.Text = "Wybierz użytkownika:";
+            // 
+            // UserName2
+            // 
+            this.UserName2.AutoSize = true;
+            this.UserName2.Location = new System.Drawing.Point(272, 25);
+            this.UserName2.Name = "UserName2";
+            this.UserName2.Size = new System.Drawing.Size(155, 13);
+            this.UserName2.TabIndex = 5;
+            this.UserName2.Text = "Szukaj użytkownika po nazwie:";
+            // 
+            // UserLoginBox2
+            // 
+            this.UserLoginBox2.Location = new System.Drawing.Point(275, 41);
+            this.UserLoginBox2.Name = "UserLoginBox2";
+            this.UserLoginBox2.Size = new System.Drawing.Size(152, 20);
+            this.UserLoginBox2.TabIndex = 4;
+            this.UserLoginBox2.TextChanged += new System.EventHandler(this.UserLoginBox2_TextChanged);
+            // 
+            // EditExtraCostButton
+            // 
+            this.EditExtraCostButton.Location = new System.Drawing.Point(38, 82);
+            this.EditExtraCostButton.Name = "EditExtraCostButton";
+            this.EditExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.EditExtraCostButton.TabIndex = 3;
+            this.EditExtraCostButton.Text = "Edytuj koszty dodatkowe";
+            this.EditExtraCostButton.UseVisualStyleBackColor = true;
+            this.EditExtraCostButton.Click += new System.EventHandler(this.EditExtraCostButton_Click);
+            // 
+            // ShowExtraCostButton
+            // 
+            this.ShowExtraCostButton.Location = new System.Drawing.Point(38, 123);
+            this.ShowExtraCostButton.Name = "ShowExtraCostButton";
+            this.ShowExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.ShowExtraCostButton.TabIndex = 2;
+            this.ShowExtraCostButton.Text = "Wyświetl dane kosztów";
+            this.ShowExtraCostButton.UseVisualStyleBackColor = true;
+            this.ShowExtraCostButton.Click += new System.EventHandler(this.ShowExtraCostButton_Click);
+            // 
+            // DelExtraCostButton
+            // 
+            this.DelExtraCostButton.Location = new System.Drawing.Point(38, 260);
+            this.DelExtraCostButton.Name = "DelExtraCostButton";
+            this.DelExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.DelExtraCostButton.TabIndex = 1;
+            this.DelExtraCostButton.Text = "Usuń koszty dodatkowy";
+            this.DelExtraCostButton.UseVisualStyleBackColor = true;
+            this.DelExtraCostButton.Click += new System.EventHandler(this.DelExtraCostButton_Click);
+            // 
+            // AddExtraCostButton
+            // 
+            this.AddExtraCostButton.Location = new System.Drawing.Point(38, 41);
+            this.AddExtraCostButton.Name = "AddExtraCostButton";
+            this.AddExtraCostButton.Size = new System.Drawing.Size(124, 35);
+            this.AddExtraCostButton.TabIndex = 0;
+            this.AddExtraCostButton.Text = "Nałóż koszty dodatkowe";
+            this.AddExtraCostButton.UseVisualStyleBackColor = true;
+            this.AddExtraCostButton.Click += new System.EventHandler(this.AddExtraCostButton_Click);
+            // 
             // PaymentPage
             // 
             this.PaymentPage.Location = new System.Drawing.Point(4, 22);
@@ -463,80 +537,6 @@
             // backgroundW
             // 
             this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
-            // 
-            // AddExtraCostButton
-            // 
-            this.AddExtraCostButton.Location = new System.Drawing.Point(38, 41);
-            this.AddExtraCostButton.Name = "AddExtraCostButton";
-            this.AddExtraCostButton.Size = new System.Drawing.Size(124, 35);
-            this.AddExtraCostButton.TabIndex = 0;
-            this.AddExtraCostButton.Text = "Nałóż koszty dodatkowe";
-            this.AddExtraCostButton.UseVisualStyleBackColor = true;
-            this.AddExtraCostButton.Click += new System.EventHandler(this.AddExtraCostButton_Click);
-            // 
-            // DelExtraCostButton
-            // 
-            this.DelExtraCostButton.Location = new System.Drawing.Point(38, 82);
-            this.DelExtraCostButton.Name = "DelExtraCostButton";
-            this.DelExtraCostButton.Size = new System.Drawing.Size(124, 35);
-            this.DelExtraCostButton.TabIndex = 1;
-            this.DelExtraCostButton.Text = "Usuń koszty dodatkowy";
-            this.DelExtraCostButton.UseVisualStyleBackColor = true;
-            this.DelExtraCostButton.Click += new System.EventHandler(this.DelExtraCostButton_Click);
-            // 
-            // ShowExtraCostButton
-            // 
-            this.ShowExtraCostButton.Location = new System.Drawing.Point(38, 123);
-            this.ShowExtraCostButton.Name = "ShowExtraCostButton";
-            this.ShowExtraCostButton.Size = new System.Drawing.Size(124, 35);
-            this.ShowExtraCostButton.TabIndex = 2;
-            this.ShowExtraCostButton.Text = "Wyświetl dane kosztów";
-            this.ShowExtraCostButton.UseVisualStyleBackColor = true;
-            this.ShowExtraCostButton.Click += new System.EventHandler(this.ShowExtraCostButton_Click);
-            // 
-            // EditExtraCostButton
-            // 
-            this.EditExtraCostButton.Location = new System.Drawing.Point(38, 164);
-            this.EditExtraCostButton.Name = "EditExtraCostButton";
-            this.EditExtraCostButton.Size = new System.Drawing.Size(124, 35);
-            this.EditExtraCostButton.TabIndex = 3;
-            this.EditExtraCostButton.Text = "Edytuj koszty dodatkowe";
-            this.EditExtraCostButton.UseVisualStyleBackColor = true;
-            this.EditExtraCostButton.Click += new System.EventHandler(this.EditExtraCostButton_Click);
-            // 
-            // UserLoginBox2
-            // 
-            this.UserLoginBox2.Location = new System.Drawing.Point(275, 41);
-            this.UserLoginBox2.Name = "UserLoginBox2";
-            this.UserLoginBox2.Size = new System.Drawing.Size(152, 20);
-            this.UserLoginBox2.TabIndex = 4;
-            this.UserLoginBox2.TextChanged += new System.EventHandler(this.UserLoginBox2_TextChanged);
-            // 
-            // UserName2
-            // 
-            this.UserName2.AutoSize = true;
-            this.UserName2.Location = new System.Drawing.Point(272, 25);
-            this.UserName2.Name = "UserName2";
-            this.UserName2.Size = new System.Drawing.Size(155, 13);
-            this.UserName2.TabIndex = 5;
-            this.UserName2.Text = "Szukaj użytkownika po nazwie:";
-            // 
-            // OutUsers2
-            // 
-            this.OutUsers2.AutoSize = true;
-            this.OutUsers2.Location = new System.Drawing.Point(272, 93);
-            this.OutUsers2.Name = "OutUsers2";
-            this.OutUsers2.Size = new System.Drawing.Size(110, 13);
-            this.OutUsers2.TabIndex = 6;
-            this.OutUsers2.Text = "Wybierz użytkownika:";
-            // 
-            // UserListBox2
-            // 
-            this.UserListBox2.FormattingEnabled = true;
-            this.UserListBox2.Location = new System.Drawing.Point(275, 109);
-            this.UserListBox2.Name = "UserListBox2";
-            this.UserListBox2.Size = new System.Drawing.Size(152, 173);
-            this.UserListBox2.TabIndex = 7;
             // 
             // Panel
             // 

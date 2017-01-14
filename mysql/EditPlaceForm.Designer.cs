@@ -33,11 +33,12 @@
             this.ApplyButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.PlaceNameLabel = new System.Windows.Forms.Label();
+            this.IDLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // PlaceNameBox
             // 
-            this.PlaceNameBox.Location = new System.Drawing.Point(112, 29);
+            this.PlaceNameBox.Location = new System.Drawing.Point(112, 43);
             this.PlaceNameBox.Name = "PlaceNameBox";
             this.PlaceNameBox.Size = new System.Drawing.Size(165, 20);
             this.PlaceNameBox.TabIndex = 0;
@@ -76,17 +77,27 @@
             // PlaceNameLabel
             // 
             this.PlaceNameLabel.AutoSize = true;
-            this.PlaceNameLabel.Location = new System.Drawing.Point(25, 32);
+            this.PlaceNameLabel.Location = new System.Drawing.Point(25, 46);
             this.PlaceNameLabel.Name = "PlaceNameLabel";
             this.PlaceNameLabel.Size = new System.Drawing.Size(81, 13);
             this.PlaceNameLabel.TabIndex = 4;
             this.PlaceNameLabel.Text = "Nazwa miejsca:";
+            // 
+            // IDLabel
+            // 
+            this.IDLabel.AutoSize = true;
+            this.IDLabel.Location = new System.Drawing.Point(47, 18);
+            this.IDLabel.Name = "IDLabel";
+            this.IDLabel.Size = new System.Drawing.Size(59, 13);
+            this.IDLabel.TabIndex = 5;
+            this.IDLabel.Text = "ID miejsca:";
             // 
             // EditPlaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(310, 141);
+            this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.PlaceNameLabel);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.ApplyButton);
@@ -106,5 +117,6 @@
         private System.Windows.Forms.Button ApplyButton;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Label PlaceNameLabel;
+        private System.Windows.Forms.Label IDLabel;
     }
 }

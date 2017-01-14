@@ -42,6 +42,7 @@
             this.CancelButton = new System.Windows.Forms.Button();
             this.IDComboBox = new System.Windows.Forms.ComboBox();
             this.IDLabel = new System.Windows.Forms.Label();
+            this.ToPayLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,7 +140,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(12, 186);
+            this.OKButton.Location = new System.Drawing.Point(11, 199);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(90, 34);
             this.OKButton.TabIndex = 9;
@@ -149,7 +150,7 @@
             // 
             // ApplyButton
             // 
-            this.ApplyButton.Location = new System.Drawing.Point(108, 186);
+            this.ApplyButton.Location = new System.Drawing.Point(107, 199);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(90, 34);
             this.ApplyButton.TabIndex = 10;
@@ -159,7 +160,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(204, 186);
+            this.CancelButton.Location = new System.Drawing.Point(203, 199);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(90, 34);
             this.CancelButton.TabIndex = 11;
@@ -185,11 +186,21 @@
             this.IDLabel.TabIndex = 13;
             this.IDLabel.Text = "Wybierz ID:";
             // 
+            // ToPayLabel
+            // 
+            this.ToPayLabel.AutoSize = true;
+            this.ToPayLabel.Location = new System.Drawing.Point(27, 174);
+            this.ToPayLabel.Name = "ToPayLabel";
+            this.ToPayLabel.Size = new System.Drawing.Size(170, 13);
+            this.ToPayLabel.TabIndex = 14;
+            this.ToPayLabel.Text = "Do zapłacenia przez użytkownika:";
+            // 
             // AddECostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(306, 233);
+            this.ClientSize = new System.Drawing.Size(306, 245);
+            this.Controls.Add(this.ToPayLabel);
             this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.IDComboBox);
             this.Controls.Add(this.CancelButton);
@@ -229,5 +240,6 @@
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ComboBox IDComboBox;
         private System.Windows.Forms.Label IDLabel;
+        private System.Windows.Forms.Label ToPayLabel;
     }
 }

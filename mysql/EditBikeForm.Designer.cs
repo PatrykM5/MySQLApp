@@ -41,12 +41,13 @@
             this.EditBikeButton = new System.Windows.Forms.Button();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.IDLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BikeNumLabel
             // 
             this.BikeNumLabel.AutoSize = true;
-            this.BikeNumLabel.Location = new System.Drawing.Point(76, 31);
+            this.BikeNumLabel.Location = new System.Drawing.Point(73, 47);
             this.BikeNumLabel.Name = "BikeNumLabel";
             this.BikeNumLabel.Size = new System.Drawing.Size(41, 13);
             this.BikeNumLabel.TabIndex = 0;
@@ -54,7 +55,7 @@
             // 
             // EdBikeNumTBox
             // 
-            this.EdBikeNumTBox.Location = new System.Drawing.Point(123, 28);
+            this.EdBikeNumTBox.Location = new System.Drawing.Point(120, 44);
             this.EdBikeNumTBox.Name = "EdBikeNumTBox";
             this.EdBikeNumTBox.Size = new System.Drawing.Size(121, 20);
             this.EdBikeNumTBox.TabIndex = 1;
@@ -63,7 +64,7 @@
             // PlaceBikeLabel
             // 
             this.PlaceBikeLabel.AutoSize = true;
-            this.PlaceBikeLabel.Location = new System.Drawing.Point(71, 57);
+            this.PlaceBikeLabel.Location = new System.Drawing.Point(68, 73);
             this.PlaceBikeLabel.Name = "PlaceBikeLabel";
             this.PlaceBikeLabel.Size = new System.Drawing.Size(46, 13);
             this.PlaceBikeLabel.TabIndex = 2;
@@ -74,7 +75,7 @@
             this.EdBikePlaceCBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.EdBikePlaceCBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.EdBikePlaceCBox.FormattingEnabled = true;
-            this.EdBikePlaceCBox.Location = new System.Drawing.Point(123, 54);
+            this.EdBikePlaceCBox.Location = new System.Drawing.Point(120, 70);
             this.EdBikePlaceCBox.Name = "EdBikePlaceCBox";
             this.EdBikePlaceCBox.Size = new System.Drawing.Size(121, 21);
             this.EdBikePlaceCBox.TabIndex = 4;
@@ -85,7 +86,7 @@
             this.EdBikeUsLoginCBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.EdBikeUsLoginCBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.EdBikeUsLoginCBox.FormattingEnabled = true;
-            this.EdBikeUsLoginCBox.Location = new System.Drawing.Point(123, 112);
+            this.EdBikeUsLoginCBox.Location = new System.Drawing.Point(120, 128);
             this.EdBikeUsLoginCBox.Name = "EdBikeUsLoginCBox";
             this.EdBikeUsLoginCBox.Size = new System.Drawing.Size(121, 21);
             this.EdBikeUsLoginCBox.TabIndex = 5;
@@ -94,7 +95,7 @@
             // LoginUserLabel
             // 
             this.LoginUserLabel.AutoSize = true;
-            this.LoginUserLabel.Location = new System.Drawing.Point(19, 115);
+            this.LoginUserLabel.Location = new System.Drawing.Point(16, 131);
             this.LoginUserLabel.Name = "LoginUserLabel";
             this.LoginUserLabel.Size = new System.Drawing.Size(98, 13);
             this.LoginUserLabel.TabIndex = 6;
@@ -103,7 +104,7 @@
             // RentBikeLabel
             // 
             this.RentBikeLabel.AutoSize = true;
-            this.RentBikeLabel.Location = new System.Drawing.Point(41, 87);
+            this.RentBikeLabel.Location = new System.Drawing.Point(38, 103);
             this.RentBikeLabel.Name = "RentBikeLabel";
             this.RentBikeLabel.Size = new System.Drawing.Size(76, 13);
             this.RentBikeLabel.TabIndex = 7;
@@ -112,7 +113,7 @@
             // RentYesRButton
             // 
             this.RentYesRButton.AutoSize = true;
-            this.RentYesRButton.Location = new System.Drawing.Point(123, 85);
+            this.RentYesRButton.Location = new System.Drawing.Point(120, 101);
             this.RentYesRButton.Name = "RentYesRButton";
             this.RentYesRButton.Size = new System.Drawing.Size(44, 17);
             this.RentYesRButton.TabIndex = 8;
@@ -124,7 +125,7 @@
             // RentNoRButton
             // 
             this.RentNoRButton.AutoSize = true;
-            this.RentNoRButton.Location = new System.Drawing.Point(173, 85);
+            this.RentNoRButton.Location = new System.Drawing.Point(170, 101);
             this.RentNoRButton.Name = "RentNoRButton";
             this.RentNoRButton.Size = new System.Drawing.Size(41, 17);
             this.RentNoRButton.TabIndex = 9;
@@ -136,7 +137,7 @@
             // StatusBikeLabel
             // 
             this.StatusBikeLabel.AutoSize = true;
-            this.StatusBikeLabel.Location = new System.Drawing.Point(81, 140);
+            this.StatusBikeLabel.Location = new System.Drawing.Point(78, 156);
             this.StatusBikeLabel.Name = "StatusBikeLabel";
             this.StatusBikeLabel.Size = new System.Drawing.Size(32, 13);
             this.StatusBikeLabel.TabIndex = 10;
@@ -172,11 +173,21 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
+            // IDLabel
+            // 
+            this.IDLabel.AutoSize = true;
+            this.IDLabel.Location = new System.Drawing.Point(58, 19);
+            this.IDLabel.Name = "IDLabel";
+            this.IDLabel.Size = new System.Drawing.Size(56, 13);
+            this.IDLabel.TabIndex = 14;
+            this.IDLabel.Text = "ID roweru:";
+            // 
             // EditBikeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(290, 261);
+            this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.EditBikeButton);
@@ -212,5 +223,6 @@
         private System.Windows.Forms.Button EditBikeButton;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Label IDLabel;
     }
 }
