@@ -73,11 +73,20 @@
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
             this.backgroundW = new System.ComponentModel.BackgroundWorker();
+            this.AddAdminButton = new System.Windows.Forms.Button();
+            this.DelAdminButton = new System.Windows.Forms.Button();
+            this.ShowAdminButton = new System.Windows.Forms.Button();
+            this.EditAdminButton = new System.Windows.Forms.Button();
+            this.AdminLoginBox = new System.Windows.Forms.TextBox();
+            this.AdminListBox = new System.Windows.Forms.ListBox();
+            this.AdminName = new System.Windows.Forms.Label();
+            this.AdminListLabel = new System.Windows.Forms.Label();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
             this.BikesPage.SuspendLayout();
             this.ExtraCostsPage.SuspendLayout();
+            this.AdminsPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // PanelControl
@@ -94,6 +103,7 @@
             this.PanelControl.SelectedIndex = 0;
             this.PanelControl.Size = new System.Drawing.Size(521, 336);
             this.PanelControl.TabIndex = 0;
+            this.PanelControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.PanelControl_Selecting);
             // 
             // UsersPage
             // 
@@ -497,6 +507,14 @@
             // 
             // AdminsPage
             // 
+            this.AdminsPage.Controls.Add(this.AdminListLabel);
+            this.AdminsPage.Controls.Add(this.AdminName);
+            this.AdminsPage.Controls.Add(this.AdminListBox);
+            this.AdminsPage.Controls.Add(this.AdminLoginBox);
+            this.AdminsPage.Controls.Add(this.EditAdminButton);
+            this.AdminsPage.Controls.Add(this.ShowAdminButton);
+            this.AdminsPage.Controls.Add(this.DelAdminButton);
+            this.AdminsPage.Controls.Add(this.AddAdminButton);
             this.AdminsPage.Location = new System.Drawing.Point(4, 22);
             this.AdminsPage.Name = "AdminsPage";
             this.AdminsPage.Padding = new System.Windows.Forms.Padding(3);
@@ -538,6 +556,80 @@
             // 
             this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
             // 
+            // AddAdminButton
+            // 
+            this.AddAdminButton.Location = new System.Drawing.Point(38, 41);
+            this.AddAdminButton.Name = "AddAdminButton";
+            this.AddAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.AddAdminButton.TabIndex = 0;
+            this.AddAdminButton.Text = "Dodaj Administratora";
+            this.AddAdminButton.UseVisualStyleBackColor = true;
+            this.AddAdminButton.Click += new System.EventHandler(this.AddAdminButton_Click);
+            // 
+            // DelAdminButton
+            // 
+            this.DelAdminButton.Location = new System.Drawing.Point(38, 82);
+            this.DelAdminButton.Name = "DelAdminButton";
+            this.DelAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.DelAdminButton.TabIndex = 1;
+            this.DelAdminButton.Text = "Usuń Administratora";
+            this.DelAdminButton.UseVisualStyleBackColor = true;
+            this.DelAdminButton.Click += new System.EventHandler(this.DelAdminButton_Click);
+            // 
+            // ShowAdminButton
+            // 
+            this.ShowAdminButton.Location = new System.Drawing.Point(38, 123);
+            this.ShowAdminButton.Name = "ShowAdminButton";
+            this.ShowAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.ShowAdminButton.TabIndex = 2;
+            this.ShowAdminButton.Text = "Wyświetl Administratora";
+            this.ShowAdminButton.UseVisualStyleBackColor = true;
+            this.ShowAdminButton.Click += new System.EventHandler(this.ShowAdminButton_Click);
+            // 
+            // EditAdminButton
+            // 
+            this.EditAdminButton.Location = new System.Drawing.Point(38, 164);
+            this.EditAdminButton.Name = "EditAdminButton";
+            this.EditAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.EditAdminButton.TabIndex = 3;
+            this.EditAdminButton.Text = "Edytuj Administratora";
+            this.EditAdminButton.UseVisualStyleBackColor = true;
+            this.EditAdminButton.Click += new System.EventHandler(this.EditAdminButton_Click);
+            // 
+            // AdminLoginBox
+            // 
+            this.AdminLoginBox.Location = new System.Drawing.Point(275, 41);
+            this.AdminLoginBox.Name = "AdminLoginBox";
+            this.AdminLoginBox.Size = new System.Drawing.Size(152, 20);
+            this.AdminLoginBox.TabIndex = 4;
+            this.AdminLoginBox.TextChanged += new System.EventHandler(this.AdminLoginBox_TextChanged);
+            // 
+            // AdminListBox
+            // 
+            this.AdminListBox.FormattingEnabled = true;
+            this.AdminListBox.Location = new System.Drawing.Point(275, 109);
+            this.AdminListBox.Name = "AdminListBox";
+            this.AdminListBox.Size = new System.Drawing.Size(152, 173);
+            this.AdminListBox.TabIndex = 5;
+            // 
+            // AdminName
+            // 
+            this.AdminName.AutoSize = true;
+            this.AdminName.Location = new System.Drawing.Point(272, 25);
+            this.AdminName.Name = "AdminName";
+            this.AdminName.Size = new System.Drawing.Size(162, 13);
+            this.AdminName.TabIndex = 6;
+            this.AdminName.Text = "Szukaj Administratora po nazwie:";
+            // 
+            // AdminListLabel
+            // 
+            this.AdminListLabel.AutoSize = true;
+            this.AdminListLabel.Location = new System.Drawing.Point(272, 93);
+            this.AdminListLabel.Name = "AdminListLabel";
+            this.AdminListLabel.Size = new System.Drawing.Size(117, 13);
+            this.AdminListLabel.TabIndex = 7;
+            this.AdminListLabel.Text = "Wybierz Administratora:";
+            // 
             // Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -562,6 +654,8 @@
             this.BikesPage.PerformLayout();
             this.ExtraCostsPage.ResumeLayout(false);
             this.ExtraCostsPage.PerformLayout();
+            this.AdminsPage.ResumeLayout(false);
+            this.AdminsPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -614,5 +708,13 @@
         private System.Windows.Forms.Button ShowExtraCostButton;
         private System.Windows.Forms.Button DelExtraCostButton;
         private System.Windows.Forms.Button AddExtraCostButton;
+        private System.Windows.Forms.Button EditAdminButton;
+        private System.Windows.Forms.Button ShowAdminButton;
+        private System.Windows.Forms.Button DelAdminButton;
+        private System.Windows.Forms.Button AddAdminButton;
+        private System.Windows.Forms.Label AdminListLabel;
+        private System.Windows.Forms.Label AdminName;
+        private System.Windows.Forms.ListBox AdminListBox;
+        private System.Windows.Forms.TextBox AdminLoginBox;
     }
 }

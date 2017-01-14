@@ -20,10 +20,13 @@ namespace mysql
         public static EditBikeForm ebf1;
         public static EditPlaceForm epf1;
         public static AddECostForm aecf1;
+        public static AddAdminForm aaf1;
+        private string type_name = "";
         //Thread t1;
-        public Panel()
+        public Panel(string type)
         {
             InitializeComponent();
+            type_name = type;
             //AddUserButton.Enabled = false;
             //DelUserButton.Enabled = false;
             //EditUserButton.Enabled = false;
@@ -38,9 +41,21 @@ namespace mysql
             ShowAllUsers(12);
             ShowAllBikes();
             ShowAllPlaces();
+            ShowAllAdmins();
             backgroundW.DoWork += backgroundW_DoWork;
             backgroundW.ProgressChanged += backgroundW_ProgressChanged;
             backgroundW.RunWorkerAsync();
+            if (type == "zwykły")
+            {
+                //tutaj mogą być jakieś ograniczenia
+                DelUserButton.Enabled = false;
+                DelPlaceButton.Enabled = false;
+                DelBikeButton.Enabled = false;
+                AddAdminButton.Enabled = false;
+                DelAdminButton.Enabled = false;
+                ShowAdminButton.Enabled = false;
+                EditAdminButton.Enabled = false;
+            }
             //t1 = new Thread(ConnectCheck);
             //t1.Start();
         }
@@ -81,7 +96,7 @@ namespace mysql
 
         private string GenerateUserPassword()
         {
-            string password="";
+            string password = "";
             //tutaj generowanie randomowego hasła
             return password;
         }
@@ -91,7 +106,7 @@ namespace mysql
         {
             try
             {
-                if(listbox==1) UserListBox.Items.Clear();
+                if (listbox == 1) UserListBox.Items.Clear();
                 if (listbox == 2) UserListBox2.Items.Clear();
                 if (listbox == 12)
                 {
@@ -131,7 +146,7 @@ namespace mysql
             {
                 e.Cancel = true;
             }
-            
+
         }
 
         //button - dodawania użytkownika przez otwarcie odpowiedniej Form'y
@@ -165,23 +180,23 @@ namespace mysql
                     {
                         rdr.Close();
                         //tutaj usuwanie użytkownika
-                        string delete_query = "DELETE FROM uzytkownik WHERE login='"+login+"';";
+                        string delete_query = "DELETE FROM uzytkownik WHERE login='" + login + "';";
                         MySqlCommand updateCmd = new MySqlCommand(delete_query, Form1.connection);
 
                         updateCmd.ExecuteNonQuery();
-                        MessageBox.Show("Usunięto użytkownika "+login,"Gratulacje");
-                        UpdateUserListBox(UserLoginBox.Text,1);
+                        MessageBox.Show("Usunięto użytkownika " + login, "Gratulacje");
+                        UpdateUserListBox(UserLoginBox.Text, 1);
                     }
-                    else MessageBox.Show("Nie znaleziono użytkownika "+login, "Błąd");
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.ToString(),"ERROR");
+                    MessageBox.Show(ex.ToString(), "ERROR");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(),"ERROR");
+                    MessageBox.Show(ex.ToString(), "ERROR");
                 }
             }
 
@@ -190,11 +205,13 @@ namespace mysql
         //button - pokazywanie danych użytkownika
         private void ShowUserButton_Click(object sender, EventArgs e)
         {
-            
+
             string login = "";
-            try {
+            try
+            {
                 login = UserListBox.SelectedItem.ToString();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Wybierz uzytkownika", "Błąd");
             }
@@ -207,7 +224,7 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        edit_user_data(rdr,"Wyświetl dane użytkownika");
+                        edit_user_data(rdr, "Wyświetl dane użytkownika");
                         rdr.Close();
                         /*
                         //wypisywanie danych użytkownika w messagebox
@@ -222,26 +239,26 @@ namespace mysql
                             */
                     }
 
-                    else MessageBox.Show("Nie znaleziono użytkownika "+login,"Błąd");
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.ToString(),"ERROR");
-                    
+                    MessageBox.Show(ex.ToString(), "ERROR");
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(),"ERROR");
+                    MessageBox.Show(ex.ToString(), "ERROR");
                 }
             }
-            
+
         }
 
         //funkcja edycji użytkownika
         private void edit_user_data(MySqlDataReader rdr, string s)
         {
-            Panel.euf1 = new EditUserForm(rdr,s);
+            Panel.euf1 = new EditUserForm(rdr, s);
             Panel.euf1.ShowDialog();
             if (euf1.edited) ShowAllUsers(12);
         }
@@ -268,39 +285,39 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        edit_user_data(rdr,"Edytuj dane użytkownika");
+                        edit_user_data(rdr, "Edytuj dane użytkownika");
                         rdr.Close();
                     }
-                    else MessageBox.Show("Nie znaleziono użytkownika "+login,"Błąd");
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.ToString(),"ERROR");
+                    MessageBox.Show(ex.ToString(), "ERROR");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(),"ERROR");
+                    MessageBox.Show(ex.ToString(), "ERROR");
                 }
             }
         }
 
         //funkcja uaktualnia listę użytkowników
-        private void UpdateUserListBox(string UserName,int listbox)
+        private void UpdateUserListBox(string UserName, int listbox)
         {
             if (UserName == "") ShowAllUsers(listbox);
             else
             {
                 try
                 {
-                    if(listbox==1) UserListBox.Items.Clear();
+                    if (listbox == 1) UserListBox.Items.Clear();
                     if (listbox == 2) UserListBox2.Items.Clear();
                     MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login LIKE '%" + UserName + "%' ORDER BY login", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        if(listbox==1) UserListBox.Items.Add(rdr.GetString(1));
+                        if (listbox == 1) UserListBox.Items.Add(rdr.GetString(1));
                         if (listbox == 2) UserListBox2.Items.Add(rdr.GetString(1));
                     }
                     rdr.Close();
@@ -315,7 +332,7 @@ namespace mysql
         //textchanged - podczas wpisywania nazwy użytkownika wywołuje funkcje
         private void UserLoginBox_TextChanged(object sender, EventArgs e)
         {
-            UpdateUserListBox(UserLoginBox.Text,1);
+            UpdateUserListBox(UserLoginBox.Text, 1);
         }
 
         //nie używane
@@ -348,7 +365,7 @@ namespace mysql
         //button - dodawania roweru
         private void AddBikeButton_Click(object sender, EventArgs e)
         {
-            int number=0;
+            int number = 0;
             if (BikeNrTextBox.Text == "")
             {
                 MessageBox.Show("Dodanie roweru wymaga podania jego numeru!", "Błąd");
@@ -463,7 +480,7 @@ namespace mysql
 
         private void ShowBikeButton_Click(object sender, EventArgs e)
         {
-            string numer = "",answer="", message="";
+            string numer = "", answer = "", message = "";
             try
             {
                 numer = BikeListBox.SelectedItem.ToString();
@@ -553,7 +570,7 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        Panel.ebf1 = new EditBikeForm(rdr,"Edytuj dane roweru");
+                        Panel.ebf1 = new EditBikeForm(rdr, "Edytuj dane roweru");
                         Panel.ebf1.ShowDialog();
                         if (ebf1.edited) ShowAllBikes();
                         rdr.Close();
@@ -570,7 +587,7 @@ namespace mysql
                     MessageBox.Show(ex.ToString(), "ERROR");
                 }
             }
-            
+
         }
 
         private void ShowAllPlaces()
@@ -728,7 +745,7 @@ namespace mysql
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        Panel.epf1 = new EditPlaceForm(rdr,"Edytuj dane miejsca");
+                        Panel.epf1 = new EditPlaceForm(rdr, "Edytuj dane miejsca");
                         Panel.epf1.ShowDialog();
                         if (epf1.edited) ShowAllPlaces();
                         rdr.Close();
@@ -795,47 +812,53 @@ namespace mysql
             Action updateAction1 = new Action(ConnectionBrakLabel.Show);
             Action updateAction2 = new Action(ConnectionBrakLabel.Hide);
             string temp;
-            bool changed=false;
+            bool changed = false;
             bool temp_b = false;
             while (true)
             {
-                //Form1.connection.Ping();
-                temp = Form1.connection.State.ToString();
-                if (temp != "Open")
-                {
-                    temp_b = connected;
-                    connected = false;
-                    if (connected == temp_b) changed = false;
-                    else changed = true;
-                    //backgroundW.RunWorkerAsync();
-                    if(changed) ConnectionBrakLabel.Invoke(updateAction1);
-                    if (MessageBox.Show("Utracono połączenie, odnowić?", "Info", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                try {
+                    //Form1.connection.Ping();
+                    temp = Form1.connection.State.ToString();
+                    if (temp != "Open")
                     {
-                        try
+                        temp_b = connected;
+                        connected = false;
+                        if (connected == temp_b) changed = false;
+                        else changed = true;
+                        //backgroundW.RunWorkerAsync();
+                        if (changed) ConnectionBrakLabel.Invoke(updateAction1);
+                        if (MessageBox.Show("Utracono połączenie, odnowić?", "Info", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
-                            Form1.connection.Open();
+                            try
+                            {
+                                Form1.connection.Open();
+                            }
+                            catch (MySqlException ex)
+                            {
+                                MessageBox.Show(ex.ToString(), "ERROR!");
+                            }
                         }
-                        catch (MySqlException ex)
+                        else
                         {
-                            MessageBox.Show(ex.ToString(), "ERROR!");
+                            //t1.Suspend();
+                            this.Close();
                         }
+                        temp = Form1.connection.State.ToString();
                     }
-                    else
+                    else if (temp == "Open")
                     {
-                        //t1.Suspend();
-                        this.Close();
+                        temp_b = connected;
+                        connected = true;
+                        if (connected == temp_b) changed = false;
+                        else changed = true;
+                        if (changed) ConnectionBrakLabel.Invoke(updateAction2);
                     }
-
+                    Thread.Sleep(1000);
                 }
-                else 
+                catch (Exception)
                 {
-                    temp_b = connected;
-                    connected = true;
-                    if (connected == temp_b) changed = false;
-                    else changed = true;
-                    if (changed) ConnectionBrakLabel.Invoke(updateAction2);
+                    //tutaj może obsługa wyjątku
                 }
-                Thread.Sleep(5000);
             }
         }
 
@@ -873,9 +896,9 @@ namespace mysql
                     {
                         id = rdr.GetInt16(0);
                         rdr.Close();
-                        aecf1 = new AddECostForm(id,login,"Dodawanie kosztu dodatkowego");
+                        aecf1 = new AddECostForm(id, login, "Dodawanie kosztu dodatkowego");
                         aecf1.ShowDialog();
-                        
+
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -962,9 +985,21 @@ namespace mysql
                     {
                         id = rdr.GetInt16(0);
                         rdr.Close();
-                        aecf1 = new AddECostForm(id, login, "Edycja kosztów dodatkowych");
-                        aecf1.ShowDialog();
 
+                        MySqlCommand cmd1 = new MySqlCommand("SELECT * FROM koszty_dodatkowe WHERE id_uzytkownik='" + id + "';", Form1.connection);
+                        MySqlDataReader rdr1 = null;
+                        rdr1 = cmd1.ExecuteReader();
+                        if (rdr1.Read())
+                        {
+
+                            aecf1 = new AddECostForm(id, login, "Edycja kosztów dodatkowych");
+                            aecf1.ShowDialog();
+                        }
+                        else
+                        {
+                            rdr.Close();
+                            MessageBox.Show("Brak kosztów dodatkowych użytkownika", "Informacja");
+                        }
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -979,8 +1014,164 @@ namespace mysql
                 }
             }
         }
-    }
-}
 
-       
+        private void PanelControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (type_name == "zwykły")
+            {
+                if (e.TabPage == AdminsPage) { e.Cancel = true; MessageBox.Show("Brak uprawnień dostępu!", "Info"); }
+            }
+        }
+
+        private void ShowAllAdmins()
+        {
+            try
+            {
+                AdminListBox.Items.Clear();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM administrator ORDER BY login", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    AdminListBox.Items.Add(rdr.GetString(1));
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void AddAdminButton_Click(object sender, EventArgs e)
+        {
+            //tutaj dodawanie administratora
+            Panel.aaf1 = new AddAdminForm("Dodawanie Administratora",0);
+            Panel.aaf1.ShowDialog();
+            if (aaf1.added) ShowAllAdmins();
+        }
+
+        private void DelAdminButton_Click(object sender, EventArgs e)
+        {
+            //tutaj usuwanie administratora
+        }
+
+        private void ShowAdminButton_Click(object sender, EventArgs e)
+        {
+            //tutaj pokazywanie danych administratora
+            string login = "";
+            int id = 0;
+            try
+            {
+                login = AdminListBox.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz Administratora", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM administrator WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt32(0);
+                        rdr.Close();
+                        Panel.aaf1 = new AddAdminForm("Wyświetlanie danych Administratora", id);
+                        Panel.aaf1.ShowDialog();
+                        
+                    }
+                    else MessageBox.Show("Nie znaleziono Administratora " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void EditAdminButton_Click(object sender, EventArgs e)
+        {
+            //tutaj edytowanie danych administratora
+            string login = "";
+            int id = 0;
+            try
+            {
+                login = AdminListBox.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz Administratora", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM administrator WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt32(0);
+                        rdr.Close();
+                        Panel.aaf1 = new AddAdminForm("Edycja danych Administratora", id);
+                        Panel.aaf1.ShowDialog();
+                        if (aaf1.edited) ShowAllAdmins();
+                    }
+                    else MessageBox.Show("Nie znaleziono Administratora " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void UpdateAdminListBox(string AdminName)
+        {
+            if (AdminName == "") ShowAllAdmins();
+            else
+            {
+                try
+                {
+                    AdminListBox.Items.Clear();
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM administrator WHERE login LIKE '%" + AdminName + "%' ORDER BY login", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        AdminListBox.Items.Add(rdr.GetString(1));
+                    }
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void AdminLoginBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateAdminListBox(AdminLoginBox.Text);
+        }
+    }
+
+
+}
 

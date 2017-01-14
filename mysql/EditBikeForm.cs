@@ -20,6 +20,7 @@ namespace mysql
         private int id_user = 0;
         private string place = "";
         private string user_login = "";
+        private string status = "";
         private bool rent = false;
         private bool edit_mode = true;
         public EditBikeForm(MySqlDataReader rdr,string formname)
@@ -33,6 +34,7 @@ namespace mysql
                 RentYesRButton.Enabled = false;
                 RentNoRButton.Enabled = false;
                 EdBikeUsLoginCBox.Enabled = false;
+                BikeStatusBox.Enabled = false;
                 OKButton.Hide();
                 EditBikeButton.Hide();
                 CancelButton.Text = "OK";
@@ -61,12 +63,14 @@ namespace mysql
             //tutaj jeszcze powinno wybrać miejsce?
             SelectPlace(id_place);
             EdBikePlaceCBox.SelectedIndex = EdBikePlaceCBox.FindStringExact(place);
+            BikeStatusBox.SelectedIndex = BikeStatusBox.FindStringExact(status);
         }
 
         private void ImportData(MySqlDataReader rdr)
         {
             id = rdr.GetInt32(0);
             number = rdr.GetInt32(3);
+            status = rdr.GetString(5);
             if (rdr.GetInt16(4) == 1) rent = true;
             else rent = false;
             try {
@@ -255,7 +259,7 @@ namespace mysql
 
         private void EditBike()
         {
-            if (!b_nr && !b_place && !b_rent && !b_user) MessageBox.Show("Nic nie zostało zmienione", "Info");
+            if (!b_nr && !b_place && !b_rent && !b_user &&!b_status) MessageBox.Show("Nic nie zostało zmienione", "Info");
             else
             {
                 try
@@ -302,9 +306,10 @@ namespace mysql
                         }
                         if (b_status)
                         {
-                            edit_query += "stan='" /*+ tutaj cos*/ + "' ";
+                            edit_query += "stan='" + BikeStatusBox.Text + "' ";
                             b_status = false;
                             //tutaj jeszcze zmiana stanu
+                            status = BikeStatusBox.Text;
                         }
                         edit_query += "WHERE numer='" + number + "';";
                         MySqlCommand updateCmd = new MySqlCommand(edit_query, Form1.connection);
@@ -351,6 +356,12 @@ namespace mysql
         {
             if (place == EdBikePlaceCBox.Text) b_place = false;
             else b_place = true;
+        }
+
+        private void BikeStatusBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (status == BikeStatusBox.Text) b_status = false;
+            else b_status = true;
         }
 
         private void EdBikeUsLoginCBox_SelectedIndexChanged(object sender, EventArgs e)

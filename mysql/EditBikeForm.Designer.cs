@@ -42,6 +42,7 @@
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.IDLabel = new System.Windows.Forms.Label();
+            this.BikeStatusBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // BikeNumLabel
@@ -137,7 +138,7 @@
             // StatusBikeLabel
             // 
             this.StatusBikeLabel.AutoSize = true;
-            this.StatusBikeLabel.Location = new System.Drawing.Point(78, 156);
+            this.StatusBikeLabel.Location = new System.Drawing.Point(82, 158);
             this.StatusBikeLabel.Name = "StatusBikeLabel";
             this.StatusBikeLabel.Size = new System.Drawing.Size(32, 13);
             this.StatusBikeLabel.TabIndex = 10;
@@ -182,11 +183,26 @@
             this.IDLabel.TabIndex = 14;
             this.IDLabel.Text = "ID roweru:";
             // 
+            // BikeStatusBox
+            // 
+            this.BikeStatusBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.BikeStatusBox.FormattingEnabled = true;
+            this.BikeStatusBox.Items.AddRange(new object[] {
+            "Sprawny",
+            "Zepsuty",
+            "W naprawie"});
+            this.BikeStatusBox.Location = new System.Drawing.Point(120, 155);
+            this.BikeStatusBox.Name = "BikeStatusBox";
+            this.BikeStatusBox.Size = new System.Drawing.Size(121, 21);
+            this.BikeStatusBox.TabIndex = 15;
+            this.BikeStatusBox.SelectedIndexChanged += new System.EventHandler(this.BikeStatusBox_SelectedIndexChanged);
+            // 
             // EditBikeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(290, 261);
+            this.Controls.Add(this.BikeStatusBox);
             this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
@@ -224,5 +240,6 @@
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Label IDLabel;
+        private System.Windows.Forms.ComboBox BikeStatusBox;
     }
 }

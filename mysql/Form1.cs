@@ -16,7 +16,7 @@ namespace mysql
     {
         public static MySqlConnection connection;
         public static Panel p1;
-
+        public string type="";
         public Form1()
         {
             InitializeComponent();
@@ -35,11 +35,13 @@ namespace mysql
             {
                 Form1.connection.Open();
                 loginBox.Enabled = true;
-                passwordBox.Enabled = true;
-                LogInButton.Enabled = true;
+                //passwordBox.Enabled = true;
+                //LogInButton.Enabled = true;
+                type = "admin";
+                //type = "zwykły";
                 //Connect_button.Hide();
                 MessageBox.Show("Połączono","Gratulacje");
-                Form1.p1 = new Panel();
+                Form1.p1 = new Panel(type);
                 Form1.p1.ShowDialog();
             }
             catch (MySqlException ex)
@@ -62,7 +64,7 @@ namespace mysql
                 rdr = cmd.ExecuteReader();
                 if (rdr.Read())
                 {
-                    
+                    type = rdr.GetString(3);
                     
                         temp = rdr.GetString(2);
                         if (temp != password) MessageBox.Show("Błędne hasło!");
@@ -72,7 +74,7 @@ namespace mysql
                         //tutaj przejscie do panelu sterowania ->Panel.cs
                         rdr.Close();
                         passwordBox.Text = "";
-                            Form1.p1 = new Panel();
+                            Form1.p1 = new Panel(type);
                             Form1.p1.ShowDialog();
                         }
                         

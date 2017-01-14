@@ -36,6 +36,7 @@ namespace mysql
                 paid = false;
                 IDComboBox.Hide();
                 IDLabel.Hide();
+                PayInfo(id);
                 choice = 1;
             }
             else if (formname == "Wyświetlanie kosztów dodatkowych")
@@ -54,6 +55,7 @@ namespace mysql
             else if(formname=="Edycja kosztów dodatkowych")
             {
                 UpdateData(id);
+                ApplyButton.Text = "Zastosuj zmiany";
                 choice = 3;
             }
         }
@@ -93,8 +95,40 @@ namespace mysql
                 {
                     rdr.Close();
                     MessageBox.Show("Brak kosztów dodatkowych użytkownika", "Informacja");
-                    Close();
+                    //Close();
                 }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void PayInfo(int id)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM koszty_dodatkowe WHERE id_uzytkownik='" + id + "';", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    if (rdr.GetInt16(5) == 0) topay += rdr.GetDecimal(2);
+                    
+                    while (rdr.Read())
+                    {
+                        
+                        if (rdr.GetInt16(5) == 0) topay += rdr.GetDecimal(2);
+                    }
+                    rdr.Close();
+                    
+                }
+                else rdr.Close();
+                ToPayLabel.Text = "Do zapłacenia przez użytkownika: " + topay.ToString();
             }
             catch (MySqlException ex)
             {

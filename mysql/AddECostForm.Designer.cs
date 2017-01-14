@@ -154,7 +154,7 @@
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(90, 34);
             this.ApplyButton.TabIndex = 10;
-            this.ApplyButton.Text = "Zastosuj zmiany";
+            this.ApplyButton.Text = "Zastosuj";
             this.ApplyButton.UseVisualStyleBackColor = true;
             this.ApplyButton.Click += new System.EventHandler(this.ApplyButton_Click);
             // 
