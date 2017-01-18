@@ -21,6 +21,8 @@ namespace mysql
         public static EditPlaceForm epf1;
         public static AddECostForm aecf1;
         public static AddAdminForm aaf1;
+        public static AddPaymentForm apf1;
+        //public static EditPaymentForm epf1;
         private string type_name = "";
         //Thread t1;
         public Panel(string type)
@@ -59,7 +61,7 @@ namespace mysql
             //t1 = new Thread(ConnectCheck);
             //t1.Start();
         }
-        //sprawdzanie co 10s czy wciąż jest połączony do serwera
+        //sprawdzanie co 10s czy wciąż jest połączony do serwera, nieużywane
         private void ConnectCheck()
         {
             string temp;
@@ -70,15 +72,7 @@ namespace mysql
                 {
                     connected = false;
                     backgroundW.RunWorkerAsync();
-                    //if (MessageBox.Show("Czy chcesz wyłączyć Panel?", "Info", MessageBoxButtons.YesNo) == DialogResult.No)
-                    //{
-                    //    t1.Suspend();
-                    //}
-                    //else
-                    //{
-                    //    //t1.Suspend();
-                    //    //Form.ActiveForm.Close();
-                    //}
+                   
 
                 }
                 Thread.Sleep(10000);
@@ -108,10 +102,12 @@ namespace mysql
             {
                 if (listbox == 1) UserListBox.Items.Clear();
                 if (listbox == 2) UserListBox2.Items.Clear();
+                if (listbox == 3) UserListBox3.Items.Clear();
                 if (listbox == 12)
                 {
                     UserListBox.Items.Clear();
                     UserListBox2.Items.Clear();
+                    UserListBox3.Items.Clear();
                 }
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik ORDER BY login", Form1.connection);
                 MySqlDataReader rdr = null;
@@ -120,10 +116,12 @@ namespace mysql
                 {
                     if (listbox == 1) UserListBox.Items.Add(rdr.GetString(1));
                     if (listbox == 2) UserListBox2.Items.Add(rdr.GetString(1));
+                    if (listbox == 3) UserListBox3.Items.Add(rdr.GetString(1));
                     if (listbox == 12)
                     {
                         UserListBox.Items.Add(rdr.GetString(1));
                         UserListBox2.Items.Add(rdr.GetString(1));
+                        UserListBox3.Items.Add(rdr.GetString(1));
                     }
                 }
                 rdr.Close();
@@ -312,6 +310,7 @@ namespace mysql
                 {
                     if (listbox == 1) UserListBox.Items.Clear();
                     if (listbox == 2) UserListBox2.Items.Clear();
+                    if(listbox==3) UserListBox3.Items.Clear();
                     MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login LIKE '%" + UserName + "%' ORDER BY login", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
@@ -319,6 +318,7 @@ namespace mysql
                     {
                         if (listbox == 1) UserListBox.Items.Add(rdr.GetString(1));
                         if (listbox == 2) UserListBox2.Items.Add(rdr.GetString(1));
+                        if (listbox == 3) UserListBox3.Items.Add(rdr.GetString(1));
                     }
                     rdr.Close();
                 }
@@ -991,13 +991,14 @@ namespace mysql
                         rdr1 = cmd1.ExecuteReader();
                         if (rdr1.Read())
                         {
-
+                            rdr1.Close();
                             aecf1 = new AddECostForm(id, login, "Edycja kosztów dodatkowych");
                             aecf1.ShowDialog();
+                            
                         }
                         else
                         {
-                            rdr.Close();
+                            rdr1.Close();
                             MessageBox.Show("Brak kosztów dodatkowych użytkownika", "Informacja");
                         }
                     }
@@ -1169,6 +1170,175 @@ namespace mysql
         private void AdminLoginBox_TextChanged(object sender, EventArgs e)
         {
             UpdateAdminListBox(AdminLoginBox.Text);
+        }
+
+        private void AddPaymentButton_Click(object sender, EventArgs e)
+        {
+            int id=0;
+            string login = "";
+            try
+            {
+                login = UserListBox3.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz uzytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id=rdr.GetInt32(0);
+                        rdr.Close();
+                        Panel.apf1 = new AddPaymentForm(id, login);
+                        Panel.apf1.ShowDialog();
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+            
+        }
+
+        private void DelPaymentButton_Click(object sender, EventArgs e)
+        {
+            int id = 0;
+            string login = "";
+            try
+            {
+                login = UserListBox3.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz uzytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt32(0);
+                        rdr.Close();
+                        //od tego miejsca pozmieniać
+                        Panel.apf1 = new AddPaymentForm(id, login);
+                        Panel.apf1.ShowDialog();
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void ShowPaymentButton_Click(object sender, EventArgs e)
+        {
+            int id = 0;
+            string login = "";
+            try
+            {
+                login = UserListBox3.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz uzytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt32(0);
+                        rdr.Close();
+                        //od tego miejsca pozmieniać
+                        Panel.apf1 = new AddPaymentForm(id, login);
+                        Panel.apf1.ShowDialog();
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void EditPaymentButton_Click(object sender, EventArgs e)
+        {
+            int id = 0;
+            string login = "";
+            try
+            {
+                login = UserListBox3.SelectedItem.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wybierz uzytkownika", "Błąd");
+            }
+            if (login != "")
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "';", Form1.connection);
+                    MySqlDataReader rdr = null;
+                    rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        id = rdr.GetInt32(0);
+                        rdr.Close();
+                        //od tego miejsca pozmieniać
+                        Panel.apf1 = new AddPaymentForm(id, login);
+                        Panel.apf1.ShowDialog();
+                    }
+                    else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
+                    rdr.Close();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR");
+                }
+            }
+        }
+
+        private void UserLoginBox3_TextChanged(object sender, EventArgs e)
+        {
+            UpdateUserListBox(UserLoginBox3.Text, 3);
         }
     }
 

@@ -43,6 +43,7 @@
             this.IDComboBox = new System.Windows.Forms.ComboBox();
             this.IDLabel = new System.Windows.Forms.Label();
             this.ToPayLabel = new System.Windows.Forms.Label();
+            this.DateCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -140,7 +141,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(11, 199);
+            this.OKButton.Location = new System.Drawing.Point(21, 199);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(90, 34);
             this.OKButton.TabIndex = 9;
@@ -150,7 +151,7 @@
             // 
             // ApplyButton
             // 
-            this.ApplyButton.Location = new System.Drawing.Point(107, 199);
+            this.ApplyButton.Location = new System.Drawing.Point(117, 199);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(90, 34);
             this.ApplyButton.TabIndex = 10;
@@ -160,7 +161,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(203, 199);
+            this.CancelButton.Location = new System.Drawing.Point(213, 199);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(90, 34);
             this.CancelButton.TabIndex = 11;
@@ -195,11 +196,23 @@
             this.ToPayLabel.TabIndex = 14;
             this.ToPayLabel.Text = "Do zapłacenia przez użytkownika:";
             // 
+            // DateCheckBox
+            // 
+            this.DateCheckBox.AutoSize = true;
+            this.DateCheckBox.Location = new System.Drawing.Point(273, 120);
+            this.DateCheckBox.Name = "DateCheckBox";
+            this.DateCheckBox.Size = new System.Drawing.Size(49, 17);
+            this.DateCheckBox.TabIndex = 29;
+            this.DateCheckBox.Text = "teraz";
+            this.DateCheckBox.UseVisualStyleBackColor = true;
+            this.DateCheckBox.CheckedChanged += new System.EventHandler(this.DateCheckBox_CheckedChanged);
+            // 
             // AddECostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(306, 245);
+            this.ClientSize = new System.Drawing.Size(324, 245);
+            this.Controls.Add(this.DateCheckBox);
             this.Controls.Add(this.ToPayLabel);
             this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.IDComboBox);
@@ -241,5 +254,6 @@
         private System.Windows.Forms.ComboBox IDComboBox;
         private System.Windows.Forms.Label IDLabel;
         private System.Windows.Forms.Label ToPayLabel;
+        private System.Windows.Forms.CheckBox DateCheckBox;
     }
 }

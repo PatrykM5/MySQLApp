@@ -60,6 +60,12 @@
     <Compile Include="AddECostForm.Designer.cs">
       <DependentUpon>AddECostForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddPaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPaymentForm.Designer.cs">
+      <DependentUpon>AddPaymentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddECostForm.resx">
       <DependentUpon>AddECostForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddPaymentForm.resx">
+      <DependentUpon>AddPaymentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddUserForm.resx">
       <DependentUpon>AddUserForm.cs</DependentUpon>

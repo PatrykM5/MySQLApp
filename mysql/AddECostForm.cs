@@ -23,6 +23,7 @@ namespace mysql
         private string date_temp = "";
         private int choice = 0;
         private bool b_money = false, b_date = false, b_paid = false, b_desc = false;
+        private bool now = true;
 
         public AddECostForm(int id,string n,string formname)
         {
@@ -37,6 +38,7 @@ namespace mysql
                 IDComboBox.Hide();
                 IDLabel.Hide();
                 PayInfo(id);
+                DateCheckBox.Checked = true;
                 choice = 1;
             }
             else if (formname == "Wyświetlanie kosztów dodatkowych")
@@ -50,12 +52,17 @@ namespace mysql
                 ApplyButton.Hide();
                 OKButton.Hide();
                 CancelButton.Text = "OK";
+                DateCheckBox.Hide();
+                DateBox.Format=DateTimePickerFormat.Custom;
+                DateBox.CustomFormat = "dd.MM.yyyy HH:mm";
                 choice = 2;
             }
             else if(formname=="Edycja kosztów dodatkowych")
             {
                 UpdateData(id);
                 ApplyButton.Text = "Zastosuj zmiany";
+                now = false;
+                DateCheckBox.Checked = false;
                 choice = 3;
             }
         }
@@ -144,7 +151,8 @@ namespace mysql
         {
             int temp_b = 0;
             money = MoneyBox.Value;
-            date = DateBox.Value;
+            if (now) date = DateTime.Now;
+            else date = DateBox.Value;
             string formatForMySql = date.ToString("yyyy-MM-dd HH:mm:ss");
             if (paid) temp_b = 1;
             description = DescriptionBox.Text;
@@ -191,7 +199,10 @@ namespace mysql
                     }
                     if (b_date)
                     {
-                        edit_query += "data_koszt=" + DateBox.ToString();
+                        if (now) date = DateTime.Now;
+                        else date = DateBox.Value;
+                        string formatForMySql = date.ToString("yyyy-MM-dd HH:mm:ss");
+                        edit_query += "data_koszt='" + formatForMySql+"' ";
                         if (b_desc || b_paid) edit_query += ", ";
                         b_date = false;
                     }
@@ -276,6 +287,22 @@ namespace mysql
         {
             if ((decimal)money == MoneyBox.Value) b_money = false;
             else b_money = true;
+        }
+
+        private void DateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (DateCheckBox.Checked)
+            {
+                now = true;
+                DateBox.Enabled = false;
+                b_date = true;
+            }
+            else {
+                now = false;
+                DateBox.Enabled = true;
+                if (date == DateBox.Value) b_date = false;
+                else b_date = true;
+            }
         }
 
         private void DateBox_ValueChanged(object sender, EventArgs e)

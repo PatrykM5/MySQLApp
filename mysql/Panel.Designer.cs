@@ -69,23 +69,32 @@
             this.PaymentPage = new System.Windows.Forms.TabPage();
             this.RentsPage = new System.Windows.Forms.TabPage();
             this.AdminsPage = new System.Windows.Forms.TabPage();
+            this.AdminListLabel = new System.Windows.Forms.Label();
+            this.AdminName = new System.Windows.Forms.Label();
+            this.AdminListBox = new System.Windows.Forms.ListBox();
+            this.AdminLoginBox = new System.Windows.Forms.TextBox();
+            this.EditAdminButton = new System.Windows.Forms.Button();
+            this.ShowAdminButton = new System.Windows.Forms.Button();
+            this.DelAdminButton = new System.Windows.Forms.Button();
+            this.AddAdminButton = new System.Windows.Forms.Button();
             this.ConStatusLabel = new System.Windows.Forms.Label();
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
             this.backgroundW = new System.ComponentModel.BackgroundWorker();
-            this.AddAdminButton = new System.Windows.Forms.Button();
-            this.DelAdminButton = new System.Windows.Forms.Button();
-            this.ShowAdminButton = new System.Windows.Forms.Button();
-            this.EditAdminButton = new System.Windows.Forms.Button();
-            this.AdminLoginBox = new System.Windows.Forms.TextBox();
-            this.AdminListBox = new System.Windows.Forms.ListBox();
-            this.AdminName = new System.Windows.Forms.Label();
-            this.AdminListLabel = new System.Windows.Forms.Label();
+            this.UserListBox3 = new System.Windows.Forms.ListBox();
+            this.OutUsers3 = new System.Windows.Forms.Label();
+            this.UserName3 = new System.Windows.Forms.Label();
+            this.UserLoginBox3 = new System.Windows.Forms.TextBox();
+            this.EditPaymentButton = new System.Windows.Forms.Button();
+            this.ShowPaymentButton = new System.Windows.Forms.Button();
+            this.DelPaymentButton = new System.Windows.Forms.Button();
+            this.AddPaymentButton = new System.Windows.Forms.Button();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
             this.BikesPage.SuspendLayout();
             this.ExtraCostsPage.SuspendLayout();
+            this.PaymentPage.SuspendLayout();
             this.AdminsPage.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -487,6 +496,14 @@
             // 
             // PaymentPage
             // 
+            this.PaymentPage.Controls.Add(this.EditPaymentButton);
+            this.PaymentPage.Controls.Add(this.ShowPaymentButton);
+            this.PaymentPage.Controls.Add(this.DelPaymentButton);
+            this.PaymentPage.Controls.Add(this.AddPaymentButton);
+            this.PaymentPage.Controls.Add(this.UserListBox3);
+            this.PaymentPage.Controls.Add(this.OutUsers3);
+            this.PaymentPage.Controls.Add(this.UserName3);
+            this.PaymentPage.Controls.Add(this.UserLoginBox3);
             this.PaymentPage.Location = new System.Drawing.Point(4, 22);
             this.PaymentPage.Name = "PaymentPage";
             this.PaymentPage.Padding = new System.Windows.Forms.Padding(3);
@@ -523,6 +540,80 @@
             this.AdminsPage.Text = "Administratorzy";
             this.AdminsPage.UseVisualStyleBackColor = true;
             // 
+            // AdminListLabel
+            // 
+            this.AdminListLabel.AutoSize = true;
+            this.AdminListLabel.Location = new System.Drawing.Point(272, 93);
+            this.AdminListLabel.Name = "AdminListLabel";
+            this.AdminListLabel.Size = new System.Drawing.Size(117, 13);
+            this.AdminListLabel.TabIndex = 7;
+            this.AdminListLabel.Text = "Wybierz Administratora:";
+            // 
+            // AdminName
+            // 
+            this.AdminName.AutoSize = true;
+            this.AdminName.Location = new System.Drawing.Point(272, 25);
+            this.AdminName.Name = "AdminName";
+            this.AdminName.Size = new System.Drawing.Size(162, 13);
+            this.AdminName.TabIndex = 6;
+            this.AdminName.Text = "Szukaj Administratora po nazwie:";
+            // 
+            // AdminListBox
+            // 
+            this.AdminListBox.FormattingEnabled = true;
+            this.AdminListBox.Location = new System.Drawing.Point(275, 109);
+            this.AdminListBox.Name = "AdminListBox";
+            this.AdminListBox.Size = new System.Drawing.Size(152, 173);
+            this.AdminListBox.TabIndex = 5;
+            // 
+            // AdminLoginBox
+            // 
+            this.AdminLoginBox.Location = new System.Drawing.Point(275, 41);
+            this.AdminLoginBox.Name = "AdminLoginBox";
+            this.AdminLoginBox.Size = new System.Drawing.Size(152, 20);
+            this.AdminLoginBox.TabIndex = 4;
+            this.AdminLoginBox.TextChanged += new System.EventHandler(this.AdminLoginBox_TextChanged);
+            // 
+            // EditAdminButton
+            // 
+            this.EditAdminButton.Location = new System.Drawing.Point(38, 164);
+            this.EditAdminButton.Name = "EditAdminButton";
+            this.EditAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.EditAdminButton.TabIndex = 3;
+            this.EditAdminButton.Text = "Edytuj Administratora";
+            this.EditAdminButton.UseVisualStyleBackColor = true;
+            this.EditAdminButton.Click += new System.EventHandler(this.EditAdminButton_Click);
+            // 
+            // ShowAdminButton
+            // 
+            this.ShowAdminButton.Location = new System.Drawing.Point(38, 123);
+            this.ShowAdminButton.Name = "ShowAdminButton";
+            this.ShowAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.ShowAdminButton.TabIndex = 2;
+            this.ShowAdminButton.Text = "Wyświetl Administratora";
+            this.ShowAdminButton.UseVisualStyleBackColor = true;
+            this.ShowAdminButton.Click += new System.EventHandler(this.ShowAdminButton_Click);
+            // 
+            // DelAdminButton
+            // 
+            this.DelAdminButton.Location = new System.Drawing.Point(38, 82);
+            this.DelAdminButton.Name = "DelAdminButton";
+            this.DelAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.DelAdminButton.TabIndex = 1;
+            this.DelAdminButton.Text = "Usuń Administratora";
+            this.DelAdminButton.UseVisualStyleBackColor = true;
+            this.DelAdminButton.Click += new System.EventHandler(this.DelAdminButton_Click);
+            // 
+            // AddAdminButton
+            // 
+            this.AddAdminButton.Location = new System.Drawing.Point(38, 41);
+            this.AddAdminButton.Name = "AddAdminButton";
+            this.AddAdminButton.Size = new System.Drawing.Size(124, 35);
+            this.AddAdminButton.TabIndex = 0;
+            this.AddAdminButton.Text = "Dodaj Administratora";
+            this.AddAdminButton.UseVisualStyleBackColor = true;
+            this.AddAdminButton.Click += new System.EventHandler(this.AddAdminButton_Click);
+            // 
             // ConStatusLabel
             // 
             this.ConStatusLabel.AutoSize = true;
@@ -556,79 +647,79 @@
             // 
             this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
             // 
-            // AddAdminButton
+            // UserListBox3
             // 
-            this.AddAdminButton.Location = new System.Drawing.Point(38, 41);
-            this.AddAdminButton.Name = "AddAdminButton";
-            this.AddAdminButton.Size = new System.Drawing.Size(124, 35);
-            this.AddAdminButton.TabIndex = 0;
-            this.AddAdminButton.Text = "Dodaj Administratora";
-            this.AddAdminButton.UseVisualStyleBackColor = true;
-            this.AddAdminButton.Click += new System.EventHandler(this.AddAdminButton_Click);
+            this.UserListBox3.FormattingEnabled = true;
+            this.UserListBox3.Location = new System.Drawing.Point(275, 109);
+            this.UserListBox3.Name = "UserListBox3";
+            this.UserListBox3.Size = new System.Drawing.Size(152, 173);
+            this.UserListBox3.TabIndex = 11;
             // 
-            // DelAdminButton
+            // OutUsers3
             // 
-            this.DelAdminButton.Location = new System.Drawing.Point(38, 82);
-            this.DelAdminButton.Name = "DelAdminButton";
-            this.DelAdminButton.Size = new System.Drawing.Size(124, 35);
-            this.DelAdminButton.TabIndex = 1;
-            this.DelAdminButton.Text = "Usuń Administratora";
-            this.DelAdminButton.UseVisualStyleBackColor = true;
-            this.DelAdminButton.Click += new System.EventHandler(this.DelAdminButton_Click);
+            this.OutUsers3.AutoSize = true;
+            this.OutUsers3.Location = new System.Drawing.Point(272, 93);
+            this.OutUsers3.Name = "OutUsers3";
+            this.OutUsers3.Size = new System.Drawing.Size(110, 13);
+            this.OutUsers3.TabIndex = 10;
+            this.OutUsers3.Text = "Wybierz użytkownika:";
             // 
-            // ShowAdminButton
+            // UserName3
             // 
-            this.ShowAdminButton.Location = new System.Drawing.Point(38, 123);
-            this.ShowAdminButton.Name = "ShowAdminButton";
-            this.ShowAdminButton.Size = new System.Drawing.Size(124, 35);
-            this.ShowAdminButton.TabIndex = 2;
-            this.ShowAdminButton.Text = "Wyświetl Administratora";
-            this.ShowAdminButton.UseVisualStyleBackColor = true;
-            this.ShowAdminButton.Click += new System.EventHandler(this.ShowAdminButton_Click);
+            this.UserName3.AutoSize = true;
+            this.UserName3.Location = new System.Drawing.Point(272, 25);
+            this.UserName3.Name = "UserName3";
+            this.UserName3.Size = new System.Drawing.Size(155, 13);
+            this.UserName3.TabIndex = 9;
+            this.UserName3.Text = "Szukaj użytkownika po nazwie:";
             // 
-            // EditAdminButton
+            // UserLoginBox3
             // 
-            this.EditAdminButton.Location = new System.Drawing.Point(38, 164);
-            this.EditAdminButton.Name = "EditAdminButton";
-            this.EditAdminButton.Size = new System.Drawing.Size(124, 35);
-            this.EditAdminButton.TabIndex = 3;
-            this.EditAdminButton.Text = "Edytuj Administratora";
-            this.EditAdminButton.UseVisualStyleBackColor = true;
-            this.EditAdminButton.Click += new System.EventHandler(this.EditAdminButton_Click);
+            this.UserLoginBox3.Location = new System.Drawing.Point(275, 41);
+            this.UserLoginBox3.Name = "UserLoginBox3";
+            this.UserLoginBox3.Size = new System.Drawing.Size(152, 20);
+            this.UserLoginBox3.TabIndex = 8;
+            this.UserLoginBox3.TextChanged += new System.EventHandler(this.UserLoginBox3_TextChanged);
             // 
-            // AdminLoginBox
+            // EditPaymentButton
             // 
-            this.AdminLoginBox.Location = new System.Drawing.Point(275, 41);
-            this.AdminLoginBox.Name = "AdminLoginBox";
-            this.AdminLoginBox.Size = new System.Drawing.Size(152, 20);
-            this.AdminLoginBox.TabIndex = 4;
-            this.AdminLoginBox.TextChanged += new System.EventHandler(this.AdminLoginBox_TextChanged);
+            this.EditPaymentButton.Location = new System.Drawing.Point(38, 164);
+            this.EditPaymentButton.Name = "EditPaymentButton";
+            this.EditPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.EditPaymentButton.TabIndex = 15;
+            this.EditPaymentButton.Text = "Edytuj dane wpłat";
+            this.EditPaymentButton.UseVisualStyleBackColor = true;
+            this.EditPaymentButton.Click += new System.EventHandler(this.EditPaymentButton_Click);
             // 
-            // AdminListBox
+            // ShowPaymentButton
             // 
-            this.AdminListBox.FormattingEnabled = true;
-            this.AdminListBox.Location = new System.Drawing.Point(275, 109);
-            this.AdminListBox.Name = "AdminListBox";
-            this.AdminListBox.Size = new System.Drawing.Size(152, 173);
-            this.AdminListBox.TabIndex = 5;
+            this.ShowPaymentButton.Location = new System.Drawing.Point(38, 123);
+            this.ShowPaymentButton.Name = "ShowPaymentButton";
+            this.ShowPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.ShowPaymentButton.TabIndex = 14;
+            this.ShowPaymentButton.Text = "Informacje o wpłatach";
+            this.ShowPaymentButton.UseVisualStyleBackColor = true;
+            this.ShowPaymentButton.Click += new System.EventHandler(this.ShowPaymentButton_Click);
             // 
-            // AdminName
+            // DelPaymentButton
             // 
-            this.AdminName.AutoSize = true;
-            this.AdminName.Location = new System.Drawing.Point(272, 25);
-            this.AdminName.Name = "AdminName";
-            this.AdminName.Size = new System.Drawing.Size(162, 13);
-            this.AdminName.TabIndex = 6;
-            this.AdminName.Text = "Szukaj Administratora po nazwie:";
+            this.DelPaymentButton.Location = new System.Drawing.Point(38, 82);
+            this.DelPaymentButton.Name = "DelPaymentButton";
+            this.DelPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.DelPaymentButton.TabIndex = 13;
+            this.DelPaymentButton.Text = "Usuń wpłatę";
+            this.DelPaymentButton.UseVisualStyleBackColor = true;
+            this.DelPaymentButton.Click += new System.EventHandler(this.DelPaymentButton_Click);
             // 
-            // AdminListLabel
+            // AddPaymentButton
             // 
-            this.AdminListLabel.AutoSize = true;
-            this.AdminListLabel.Location = new System.Drawing.Point(272, 93);
-            this.AdminListLabel.Name = "AdminListLabel";
-            this.AdminListLabel.Size = new System.Drawing.Size(117, 13);
-            this.AdminListLabel.TabIndex = 7;
-            this.AdminListLabel.Text = "Wybierz Administratora:";
+            this.AddPaymentButton.Location = new System.Drawing.Point(38, 41);
+            this.AddPaymentButton.Name = "AddPaymentButton";
+            this.AddPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.AddPaymentButton.TabIndex = 12;
+            this.AddPaymentButton.Text = "Dodaj wpłatę";
+            this.AddPaymentButton.UseVisualStyleBackColor = true;
+            this.AddPaymentButton.Click += new System.EventHandler(this.AddPaymentButton_Click);
             // 
             // Panel
             // 
@@ -654,6 +745,8 @@
             this.BikesPage.PerformLayout();
             this.ExtraCostsPage.ResumeLayout(false);
             this.ExtraCostsPage.PerformLayout();
+            this.PaymentPage.ResumeLayout(false);
+            this.PaymentPage.PerformLayout();
             this.AdminsPage.ResumeLayout(false);
             this.AdminsPage.PerformLayout();
             this.ResumeLayout(false);
@@ -716,5 +809,13 @@
         private System.Windows.Forms.Label AdminName;
         private System.Windows.Forms.ListBox AdminListBox;
         private System.Windows.Forms.TextBox AdminLoginBox;
+        private System.Windows.Forms.Button EditPaymentButton;
+        private System.Windows.Forms.Button ShowPaymentButton;
+        private System.Windows.Forms.Button DelPaymentButton;
+        private System.Windows.Forms.Button AddPaymentButton;
+        private System.Windows.Forms.TextBox UserLoginBox3;
+        private System.Windows.Forms.Label UserName3;
+        private System.Windows.Forms.Label OutUsers3;
+        private System.Windows.Forms.ListBox UserListBox3;
     }
 }
