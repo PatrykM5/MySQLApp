@@ -20,6 +20,7 @@ namespace mysql
             //UserNameBox.Enabled = false;
             //UserSurnameBox.Enabled = false;
             //UserMailBox.Enabled = false;
+            OptionalLabel.Hide();
         }
 
         private void label1_Click(object sender, EventArgs e)

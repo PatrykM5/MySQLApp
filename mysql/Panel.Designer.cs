@@ -67,6 +67,14 @@
             this.DelExtraCostButton = new System.Windows.Forms.Button();
             this.AddExtraCostButton = new System.Windows.Forms.Button();
             this.PaymentPage = new System.Windows.Forms.TabPage();
+            this.EditPaymentButton = new System.Windows.Forms.Button();
+            this.ShowPaymentButton = new System.Windows.Forms.Button();
+            this.DelPaymentButton = new System.Windows.Forms.Button();
+            this.AddPaymentButton = new System.Windows.Forms.Button();
+            this.UserListBox3 = new System.Windows.Forms.ListBox();
+            this.OutUsers3 = new System.Windows.Forms.Label();
+            this.UserName3 = new System.Windows.Forms.Label();
+            this.UserLoginBox3 = new System.Windows.Forms.TextBox();
             this.RentsPage = new System.Windows.Forms.TabPage();
             this.AdminsPage = new System.Windows.Forms.TabPage();
             this.AdminListLabel = new System.Windows.Forms.Label();
@@ -81,21 +89,21 @@
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
             this.backgroundW = new System.ComponentModel.BackgroundWorker();
-            this.UserListBox3 = new System.Windows.Forms.ListBox();
-            this.OutUsers3 = new System.Windows.Forms.Label();
-            this.UserName3 = new System.Windows.Forms.Label();
-            this.UserLoginBox3 = new System.Windows.Forms.TextBox();
-            this.EditPaymentButton = new System.Windows.Forms.Button();
-            this.ShowPaymentButton = new System.Windows.Forms.Button();
-            this.DelPaymentButton = new System.Windows.Forms.Button();
-            this.AddPaymentButton = new System.Windows.Forms.Button();
+            this.FindBox = new System.Windows.Forms.ComboBox();
+            this.ChoiceBox = new System.Windows.Forms.ComboBox();
+            this.ChoiceLabel = new System.Windows.Forms.Label();
+            this.FindLabel = new System.Windows.Forms.Label();
+            this.FindTabel = new System.Windows.Forms.DataGridView();
+            this.FindButton = new System.Windows.Forms.Button();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
             this.BikesPage.SuspendLayout();
             this.ExtraCostsPage.SuspendLayout();
             this.PaymentPage.SuspendLayout();
+            this.RentsPage.SuspendLayout();
             this.AdminsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FindTabel)).BeginInit();
             this.SuspendLayout();
             // 
             // PanelControl
@@ -512,8 +520,88 @@
             this.PaymentPage.Text = "Wpłaty";
             this.PaymentPage.UseVisualStyleBackColor = true;
             // 
+            // EditPaymentButton
+            // 
+            this.EditPaymentButton.Location = new System.Drawing.Point(38, 164);
+            this.EditPaymentButton.Name = "EditPaymentButton";
+            this.EditPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.EditPaymentButton.TabIndex = 15;
+            this.EditPaymentButton.Text = "Edytuj dane wpłat";
+            this.EditPaymentButton.UseVisualStyleBackColor = true;
+            this.EditPaymentButton.Click += new System.EventHandler(this.EditPaymentButton_Click);
+            // 
+            // ShowPaymentButton
+            // 
+            this.ShowPaymentButton.Location = new System.Drawing.Point(38, 82);
+            this.ShowPaymentButton.Name = "ShowPaymentButton";
+            this.ShowPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.ShowPaymentButton.TabIndex = 14;
+            this.ShowPaymentButton.Text = "Informacje o wpłatach";
+            this.ShowPaymentButton.UseVisualStyleBackColor = true;
+            this.ShowPaymentButton.Click += new System.EventHandler(this.ShowPaymentButton_Click);
+            // 
+            // DelPaymentButton
+            // 
+            this.DelPaymentButton.Location = new System.Drawing.Point(38, 123);
+            this.DelPaymentButton.Name = "DelPaymentButton";
+            this.DelPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.DelPaymentButton.TabIndex = 13;
+            this.DelPaymentButton.Text = "Usuń wpłatę";
+            this.DelPaymentButton.UseVisualStyleBackColor = true;
+            this.DelPaymentButton.Click += new System.EventHandler(this.DelPaymentButton_Click);
+            // 
+            // AddPaymentButton
+            // 
+            this.AddPaymentButton.Location = new System.Drawing.Point(38, 41);
+            this.AddPaymentButton.Name = "AddPaymentButton";
+            this.AddPaymentButton.Size = new System.Drawing.Size(124, 35);
+            this.AddPaymentButton.TabIndex = 12;
+            this.AddPaymentButton.Text = "Dodaj wpłatę";
+            this.AddPaymentButton.UseVisualStyleBackColor = true;
+            this.AddPaymentButton.Click += new System.EventHandler(this.AddPaymentButton_Click);
+            // 
+            // UserListBox3
+            // 
+            this.UserListBox3.FormattingEnabled = true;
+            this.UserListBox3.Location = new System.Drawing.Point(275, 109);
+            this.UserListBox3.Name = "UserListBox3";
+            this.UserListBox3.Size = new System.Drawing.Size(152, 173);
+            this.UserListBox3.TabIndex = 11;
+            // 
+            // OutUsers3
+            // 
+            this.OutUsers3.AutoSize = true;
+            this.OutUsers3.Location = new System.Drawing.Point(272, 93);
+            this.OutUsers3.Name = "OutUsers3";
+            this.OutUsers3.Size = new System.Drawing.Size(110, 13);
+            this.OutUsers3.TabIndex = 10;
+            this.OutUsers3.Text = "Wybierz użytkownika:";
+            // 
+            // UserName3
+            // 
+            this.UserName3.AutoSize = true;
+            this.UserName3.Location = new System.Drawing.Point(272, 25);
+            this.UserName3.Name = "UserName3";
+            this.UserName3.Size = new System.Drawing.Size(155, 13);
+            this.UserName3.TabIndex = 9;
+            this.UserName3.Text = "Szukaj użytkownika po nazwie:";
+            // 
+            // UserLoginBox3
+            // 
+            this.UserLoginBox3.Location = new System.Drawing.Point(275, 41);
+            this.UserLoginBox3.Name = "UserLoginBox3";
+            this.UserLoginBox3.Size = new System.Drawing.Size(152, 20);
+            this.UserLoginBox3.TabIndex = 8;
+            this.UserLoginBox3.TextChanged += new System.EventHandler(this.UserLoginBox3_TextChanged);
+            // 
             // RentsPage
             // 
+            this.RentsPage.Controls.Add(this.FindButton);
+            this.RentsPage.Controls.Add(this.FindTabel);
+            this.RentsPage.Controls.Add(this.FindLabel);
+            this.RentsPage.Controls.Add(this.ChoiceLabel);
+            this.RentsPage.Controls.Add(this.ChoiceBox);
+            this.RentsPage.Controls.Add(this.FindBox);
             this.RentsPage.Location = new System.Drawing.Point(4, 22);
             this.RentsPage.Name = "RentsPage";
             this.RentsPage.Padding = new System.Windows.Forms.Padding(3);
@@ -647,79 +735,66 @@
             // 
             this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
             // 
-            // UserListBox3
+            // FindBox
             // 
-            this.UserListBox3.FormattingEnabled = true;
-            this.UserListBox3.Location = new System.Drawing.Point(275, 109);
-            this.UserListBox3.Name = "UserListBox3";
-            this.UserListBox3.Size = new System.Drawing.Size(152, 173);
-            this.UserListBox3.TabIndex = 11;
+            this.FindBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.FindBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.FindBox.FormattingEnabled = true;
+            this.FindBox.Location = new System.Drawing.Point(289, 6);
+            this.FindBox.Name = "FindBox";
+            this.FindBox.Size = new System.Drawing.Size(121, 21);
+            this.FindBox.TabIndex = 0;
+            this.FindBox.SelectedIndexChanged += new System.EventHandler(this.FindBox_SelectedIndexChanged);
             // 
-            // OutUsers3
+            // ChoiceBox
             // 
-            this.OutUsers3.AutoSize = true;
-            this.OutUsers3.Location = new System.Drawing.Point(272, 93);
-            this.OutUsers3.Name = "OutUsers3";
-            this.OutUsers3.Size = new System.Drawing.Size(110, 13);
-            this.OutUsers3.TabIndex = 10;
-            this.OutUsers3.Text = "Wybierz użytkownika:";
+            this.ChoiceBox.FormattingEnabled = true;
+            this.ChoiceBox.Items.AddRange(new object[] {
+            "loginie",
+            "nr roweru",
+            "miejscu"});
+            this.ChoiceBox.Location = new System.Drawing.Point(69, 6);
+            this.ChoiceBox.Name = "ChoiceBox";
+            this.ChoiceBox.Size = new System.Drawing.Size(121, 21);
+            this.ChoiceBox.TabIndex = 1;
+            this.ChoiceBox.Text = "Wybierz opcje";
+            this.ChoiceBox.SelectedIndexChanged += new System.EventHandler(this.ChoiceBox_SelectedIndexChanged);
             // 
-            // UserName3
+            // ChoiceLabel
             // 
-            this.UserName3.AutoSize = true;
-            this.UserName3.Location = new System.Drawing.Point(272, 25);
-            this.UserName3.Name = "UserName3";
-            this.UserName3.Size = new System.Drawing.Size(155, 13);
-            this.UserName3.TabIndex = 9;
-            this.UserName3.Text = "Szukaj użytkownika po nazwie:";
+            this.ChoiceLabel.AutoSize = true;
+            this.ChoiceLabel.Location = new System.Drawing.Point(6, 9);
+            this.ChoiceLabel.Name = "ChoiceLabel";
+            this.ChoiceLabel.Size = new System.Drawing.Size(57, 13);
+            this.ChoiceLabel.TabIndex = 2;
+            this.ChoiceLabel.Text = "Szukaj po:";
             // 
-            // UserLoginBox3
+            // FindLabel
             // 
-            this.UserLoginBox3.Location = new System.Drawing.Point(275, 41);
-            this.UserLoginBox3.Name = "UserLoginBox3";
-            this.UserLoginBox3.Size = new System.Drawing.Size(152, 20);
-            this.UserLoginBox3.TabIndex = 8;
-            this.UserLoginBox3.TextChanged += new System.EventHandler(this.UserLoginBox3_TextChanged);
+            this.FindLabel.AutoSize = true;
+            this.FindLabel.Location = new System.Drawing.Point(214, 9);
+            this.FindLabel.Name = "FindLabel";
+            this.FindLabel.Size = new System.Drawing.Size(69, 13);
+            this.FindLabel.TabIndex = 3;
+            this.FindLabel.Text = "Podaj numer:";
             // 
-            // EditPaymentButton
+            // FindTabel
             // 
-            this.EditPaymentButton.Location = new System.Drawing.Point(38, 164);
-            this.EditPaymentButton.Name = "EditPaymentButton";
-            this.EditPaymentButton.Size = new System.Drawing.Size(124, 35);
-            this.EditPaymentButton.TabIndex = 15;
-            this.EditPaymentButton.Text = "Edytuj dane wpłat";
-            this.EditPaymentButton.UseVisualStyleBackColor = true;
-            this.EditPaymentButton.Click += new System.EventHandler(this.EditPaymentButton_Click);
+            this.FindTabel.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.FindTabel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.FindTabel.Location = new System.Drawing.Point(7, 33);
+            this.FindTabel.Name = "FindTabel";
+            this.FindTabel.Size = new System.Drawing.Size(500, 271);
+            this.FindTabel.TabIndex = 4;
             // 
-            // ShowPaymentButton
+            // FindButton
             // 
-            this.ShowPaymentButton.Location = new System.Drawing.Point(38, 123);
-            this.ShowPaymentButton.Name = "ShowPaymentButton";
-            this.ShowPaymentButton.Size = new System.Drawing.Size(124, 35);
-            this.ShowPaymentButton.TabIndex = 14;
-            this.ShowPaymentButton.Text = "Informacje o wpłatach";
-            this.ShowPaymentButton.UseVisualStyleBackColor = true;
-            this.ShowPaymentButton.Click += new System.EventHandler(this.ShowPaymentButton_Click);
-            // 
-            // DelPaymentButton
-            // 
-            this.DelPaymentButton.Location = new System.Drawing.Point(38, 82);
-            this.DelPaymentButton.Name = "DelPaymentButton";
-            this.DelPaymentButton.Size = new System.Drawing.Size(124, 35);
-            this.DelPaymentButton.TabIndex = 13;
-            this.DelPaymentButton.Text = "Usuń wpłatę";
-            this.DelPaymentButton.UseVisualStyleBackColor = true;
-            this.DelPaymentButton.Click += new System.EventHandler(this.DelPaymentButton_Click);
-            // 
-            // AddPaymentButton
-            // 
-            this.AddPaymentButton.Location = new System.Drawing.Point(38, 41);
-            this.AddPaymentButton.Name = "AddPaymentButton";
-            this.AddPaymentButton.Size = new System.Drawing.Size(124, 35);
-            this.AddPaymentButton.TabIndex = 12;
-            this.AddPaymentButton.Text = "Dodaj wpłatę";
-            this.AddPaymentButton.UseVisualStyleBackColor = true;
-            this.AddPaymentButton.Click += new System.EventHandler(this.AddPaymentButton_Click);
+            this.FindButton.Location = new System.Drawing.Point(422, 4);
+            this.FindButton.Name = "FindButton";
+            this.FindButton.Size = new System.Drawing.Size(75, 23);
+            this.FindButton.TabIndex = 5;
+            this.FindButton.Text = "Szukaj";
+            this.FindButton.UseVisualStyleBackColor = true;
             // 
             // Panel
             // 
@@ -747,8 +822,11 @@
             this.ExtraCostsPage.PerformLayout();
             this.PaymentPage.ResumeLayout(false);
             this.PaymentPage.PerformLayout();
+            this.RentsPage.ResumeLayout(false);
+            this.RentsPage.PerformLayout();
             this.AdminsPage.ResumeLayout(false);
             this.AdminsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FindTabel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -817,5 +895,11 @@
         private System.Windows.Forms.Label UserName3;
         private System.Windows.Forms.Label OutUsers3;
         private System.Windows.Forms.ListBox UserListBox3;
+        private System.Windows.Forms.DataGridView FindTabel;
+        private System.Windows.Forms.Label FindLabel;
+        private System.Windows.Forms.Label ChoiceLabel;
+        private System.Windows.Forms.ComboBox ChoiceBox;
+        private System.Windows.Forms.ComboBox FindBox;
+        private System.Windows.Forms.Button FindButton;
     }
 }

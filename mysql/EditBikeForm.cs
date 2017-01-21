@@ -18,6 +18,7 @@ namespace mysql
         private int number = 0;
         private int id_place = 0;
         private int id_user = 0;
+        private int choice = 0;
         private string place = "";
         private string user_login = "";
         private string status = "";
@@ -27,6 +28,8 @@ namespace mysql
         {
             InitializeComponent();
             this.Text = formname;
+            EdBikeNumTBox.Hide();
+            BikeNumLabel.Hide();
             if(formname=="Wyświetl dane roweru")
             {
                 EdBikeNumTBox.Enabled = false;
@@ -39,31 +42,52 @@ namespace mysql
                 EditBikeButton.Hide();
                 CancelButton.Text = "OK";
                 edit_mode = false;
+                choice = 1;
             }
-            ImportData(rdr);
-            rdr.Close();
-            AddAllPlaces();
-            IDLabel.Text += "  " + id;
-            EdBikeNumTBox.Text = number.ToString();
-            if (rent)
+            if(formname== "Edytuj dane roweru")
             {
-                RentYesRButton.Checked = true;
-                RentNoRButton.Checked = false;
-                //EdBikeUsLoginCBox.Enabled = true;
+                choice = 2;
+            }
+            if (formname != "Dodaj rower")
+            {
+                ImportData(rdr);
+                rdr.Close();
+                AddAllPlaces();
+                IDLabel.Text += "  " + id;
+                EdBikeNumTBox.Text = number.ToString();
+                if (rent)
+                {
+                    RentYesRButton.Checked = true;
+                    RentNoRButton.Checked = false;
+                    //EdBikeUsLoginCBox.Enabled = true;
+                    AddAllUsers();
+                    SelectUser(id_user);
+                    EdBikeUsLoginCBox.SelectedIndex = EdBikeUsLoginCBox.FindStringExact(user_login);
+                }
+                else
+                {
+                    RentNoRButton.Checked = true;
+                    RentYesRButton.Checked = false;
+                    EdBikeUsLoginCBox.Enabled = false;
+                }
+                //tutaj jeszcze powinno wybrać miejsce?
+                SelectPlace(id_place);
+                EdBikePlaceCBox.SelectedIndex = EdBikePlaceCBox.FindStringExact(place);
+                BikeStatusBox.SelectedIndex = BikeStatusBox.FindStringExact(status);
+            }
+            else {
+                AddAllPlaces();
                 AddAllUsers();
-                SelectUser(id_user);
-                EdBikeUsLoginCBox.SelectedIndex = EdBikeUsLoginCBox.FindStringExact(user_login);
+                IDLabel.Hide();
+                RentBikeLabel.Hide();
+                LoginUserLabel.Hide();
+                EdBikeUsLoginCBox.Hide();
+                RentYesRButton.Hide();
+                RentNoRButton.Hide();
+                EditBikeButton.Text = "Zastosuj";
+                choice = 3;
             }
-            else
-            {
-                RentNoRButton.Checked = true;
-                RentYesRButton.Checked = false;
-                EdBikeUsLoginCBox.Enabled = false;
-            }
-            //tutaj jeszcze powinno wybrać miejsce?
-            SelectPlace(id_place);
-            EdBikePlaceCBox.SelectedIndex = EdBikePlaceCBox.FindStringExact(place);
-            BikeStatusBox.SelectedIndex = BikeStatusBox.FindStringExact(status);
+            
         }
 
         private void ImportData(MySqlDataReader rdr)
@@ -237,7 +261,7 @@ namespace mysql
                 rdr = cmd.ExecuteReader();
                 if (rdr.Read())
                 {
-                    id_user = rdr.GetInt16(0);
+                    id_user = rdr.GetInt32(0);
                 }
                 else
                 {
@@ -311,7 +335,7 @@ namespace mysql
                             //tutaj jeszcze zmiana stanu
                             status = BikeStatusBox.Text;
                         }
-                        edit_query += "WHERE numer='" + number + "';";
+                        edit_query += "WHERE id_rower='" + id + "';";
                         MySqlCommand updateCmd = new MySqlCommand(edit_query, Form1.connection);
                         updateCmd.ExecuteNonQuery();
                         MessageBox.Show("Edytowano dane roweru", "Gratulacje");
@@ -329,9 +353,43 @@ namespace mysql
             }
         }
 
+        private void AddBike()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa='" + EdBikePlaceCBox.Text + "'", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    id_place = rdr.GetInt32(0);
+                }
+                else
+                {
+                    MessageBox.Show("Brak miejsca", "Info");
+                }
+                rdr.Close();
+                string insert_query = "INSERT INTO rowery (id_miejsca,wypozyczony,stan) VALUES ('" + id_place + "', '0', '" + BikeStatusBox.Text + "')";
+                MySqlCommand updateCmd = new MySqlCommand(insert_query, Form1.connection);
+
+                updateCmd.ExecuteNonQuery();
+                edited = true;
+                MessageBox.Show("Dodano rower", "Gratulacje");
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
         private void EditBikeButton_Click(object sender, EventArgs e)
         {
-            EditBike();
+            if(choice==2) EditBike();
+            if (choice == 3) AddBike();
         }
 
         private void EdBikeNumTBox_TextChanged(object sender, EventArgs e)
@@ -342,9 +400,17 @@ namespace mysql
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            EditBike();
-            if(rent && EdBikeUsLoginCBox.Text != "") this.Close();
-            if (!rent) this.Close();
+            if (choice == 2)
+            {
+                EditBike();
+                if (rent && EdBikeUsLoginCBox.Text != "") this.Close();
+                if (!rent) this.Close();
+            }
+            if (choice == 3)
+            {
+                AddBike();
+                this.Close();
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

@@ -41,8 +41,11 @@ namespace mysql
             //ExtraCostsPage.Hide();
             //ConnectionOKLabel.Hide();
             ConnectionBrakLabel.Hide();
-            DelPaymentButton.Enabled = false;
-            EditPaymentButton.Enabled = false;
+            DelPaymentButton.Hide();
+            EditPaymentButton.Hide();
+            FindButton.Hide();
+            FindLabel.Hide();
+            FindBox.Hide();
             ShowAllUsers(12);
             ShowAllBikes();
             ShowAllPlaces();
@@ -350,12 +353,12 @@ namespace mysql
             try
             {
                 BikeListBox.Items.Clear();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery ORDER BY numer", Form1.connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery ORDER BY id_rower", Form1.connection);
                 MySqlDataReader rdr = null;
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    BikeListBox.Items.Add(rdr.GetInt32(3));
+                    BikeListBox.Items.Add(rdr.GetInt32(0));
                 }
                 rdr.Close();
             }
@@ -365,20 +368,24 @@ namespace mysql
             }
         }
 
-        //button - dodawania roweru
+        //button - dodawania roweru do poprawy
         private void AddBikeButton_Click(object sender, EventArgs e)
         {
-            int number = 0;
-            if (BikeNrTextBox.Text == "")
-            {
-                MessageBox.Show("Dodanie roweru wymaga podania jego numeru!", "Błąd");
-            }
-            else
-            {
-                try
+            //int number = 0;
+            //if (BikeNrTextBox.Text == "")
+            //{
+            //    MessageBox.Show("Dodanie roweru wymaga podania jego numeru!", "Błąd");
+            //}
+            //else
+            //{
+            MySqlDataReader rdr = null;
+            Panel.ebf1 = new EditBikeForm(rdr, "Dodaj rower");
+            Panel.ebf1.ShowDialog();
+            if (ebf1.edited) ShowAllBikes();
+            /*try
                 {
-                    number = Int32.Parse(BikeNrTextBox.Text);
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE numer='" + BikeNrTextBox.Text + "';", Form1.connection);
+                    //number = Int32.Parse(BikeNrTextBox.Text);
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE id_rower='" + BikeNrTextBox.Text + "';", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read()) MessageBox.Show("Rower o tym numerze już istnieje!", "Błąd");
@@ -404,7 +411,8 @@ namespace mysql
                 {
                     MessageBox.Show(ex.ToString(), "ERROR");
                 }
-            }
+            //}
+            */
         }
 
         //funkcja uaktualnia listę rowerów przyjmując numer roweru
@@ -416,12 +424,12 @@ namespace mysql
                 try
                 {
                     BikeListBox.Items.Clear();
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE numer LIKE '%" + BikeNumber + "%' ORDER BY numer", Form1.connection);
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE id_rower LIKE '%" + BikeNumber + "%' ORDER BY id_rower", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BikeListBox.Items.Add(rdr.GetInt32(3));
+                        BikeListBox.Items.Add(rdr.GetInt32(0));
                     }
                     rdr.Close();
                 }
@@ -454,14 +462,14 @@ namespace mysql
             {
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE numer='" + numer + "';", Form1.connection);
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE id_rower='" + numer + "';", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
                         rdr.Close();
                         //tutaj usuwanie roweru
-                        string delete_query = "DELETE FROM rowery WHERE numer='" + numer + "';";
+                        string delete_query = "DELETE FROM rowery WHERE id_rower='" + numer + "';";
                         MySqlCommand updateCmd = new MySqlCommand(delete_query, Form1.connection);
                         updateCmd.ExecuteNonQuery();
                         MessageBox.Show("Usunięto rower o numerze: " + numer, "Gratulacje");
@@ -496,7 +504,7 @@ namespace mysql
             {
                 try
                 {
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE numer='" + numer + "';", Form1.connection);
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE id_rower='" + numer + "';", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
@@ -568,7 +576,7 @@ namespace mysql
                 try
                 {
                     //znajdywanie uzytkownika w bazie danych
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE numer='" + number + "';", Form1.connection);
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery WHERE id_rower='" + number + "';", Form1.connection);
                     MySqlDataReader rdr = null;
                     rdr = cmd.ExecuteReader();
                     if (rdr.Read())
@@ -1363,6 +1371,317 @@ namespace mysql
         private void UserLoginBox3_TextChanged(object sender, EventArgs e)
         {
             UpdateUserListBox(UserLoginBox3.Text, 3);
+        }
+
+        private void FindLogin()
+        {
+            try
+            {
+                FindBox.Items.Clear();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik ORDER BY login", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    FindBox.Items.Add(rdr.GetString(1));
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void FindBike()
+        {
+            try
+            {
+                FindBox.Items.Clear();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM rowery ORDER BY id_rower", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    FindBox.Items.Add(rdr.GetInt32(0));
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void FindPlace()
+        {
+            try
+            {
+                FindBox.Items.Clear();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca ORDER BY nazwa", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    FindBox.Items.Add(rdr.GetString(1));
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void ChoiceBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //loginie,nr rower,miejscu
+            if (ChoiceBox.Text == "loginie")
+            {
+                FindLabel.Text = "Podaj login:";
+                FindLogin();
+                FindBox.Text = "";
+            }
+            else if (ChoiceBox.Text == "nr roweru")
+            {
+                FindLabel.Text = "Podaj numer:";
+                FindBike();
+                FindBox.Text = "";
+            }
+            else if (ChoiceBox.Text == "miejscu")
+            {
+                FindLabel.Text = "Podaj miejsce:";
+                FindPlace();
+                FindBox.Text = "";
+            }
+            FindLabel.Show();
+            FindBox.Show();
+        }
+
+        private void FoundLogin(string login)
+        {
+            int id_user = 0;
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM uzytkownik WHERE login='" + login + "'", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    id_user = rdr.GetInt32(0);
+                }
+                else
+                {
+                    MessageBox.Show("Brak użytkonika", "Info");
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            //MessageBox.Show("Uzupełnianie danych");
+            try
+            {
+                //SELECT SupplierID, CompanyName,
+                //(SELECT MIN(UnitPrice) FROM Products WHERE SupplierID = z.SupplierID) AS Cena
+                //FROM Suppliers z;
+                MySqlCommand cmd = new MySqlCommand(@"SELECT id_wypozyczenia, id_rower,
+                (SELECT login FROM uzytkownik u WHERE u.id_uzytkownik=w.id_uzytkownik), data_wypozyczenia, data_zwrotu,
+                (SELECT nazwa FROM miejsca m1 WHERE m1.id_miejsca=w.id_miejsca_wypozyczenia),
+                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt
+                FROM wypozyczenia w WHERE id_uzytkownik='" + id_user.ToString()+ "' AND (NOT id_miejsca_oddania='NULL');", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                //tutaj uzupełnianie tabelki, nie wchodzi do pętli
+                while (rdr.Read())
+                {
+                    //MessageBox.Show("hello");
+                    FindTabel.ColumnCount = 8;
+                    FindTabel.ColumnHeadersVisible = true;
+
+                    // Set the column header style.
+                    DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+
+                    columnHeaderStyle.BackColor = Color.Beige;
+                    columnHeaderStyle.Font = new Font("Verdana", 7, FontStyle.Regular);
+                    FindTabel.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+
+                    // Set the column header names.
+                    FindTabel.Columns[0].Name = "ID";
+                    FindTabel.Columns[1].Name = "Rower";
+                    FindTabel.Columns[2].Name = "Użytkownik";
+                    FindTabel.Columns[3].Name = "Wypożyczono";
+                    FindTabel.Columns[4].Name = "Oddano";
+                    FindTabel.Columns[5].Name = "Z";
+                    FindTabel.Columns[6].Name = "Do";
+                    FindTabel.Columns[7].Name = "Koszt";
+
+                    //utworzenie wpisu w wiersz i umieszczenie w tabeli
+                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy HH:mm:ss"),
+                    rdr.GetString(4), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
+                    //MessageBox.Show(row_d.ToString());
+                    FindTabel.Rows.Add(row_d);
+
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void FoundBike(string number)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(@"SELECT id_wypozyczenia, id_rower,
+                (SELECT login FROM uzytkownik u WHERE u.id_uzytkownik=w.id_uzytkownik), data_wypozyczenia, data_zwrotu,
+                (SELECT nazwa FROM miejsca m1 WHERE m1.id_miejsca=w.id_miejsca_wypozyczenia),
+                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt
+                FROM wypozyczenia w WHERE id_rower='" + number.ToString() + "' AND (NOT id_miejsca_oddania='NULL');", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                //tutaj uzupełnianie tabelki, nie wchodzi do pętli
+                while (rdr.Read())
+                {
+                    //MessageBox.Show("hello");
+                    FindTabel.ColumnCount = 8;
+                    FindTabel.ColumnHeadersVisible = true;
+
+                    // Set the column header style.
+                    DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+
+                    columnHeaderStyle.BackColor = Color.Beige;
+                    columnHeaderStyle.Font = new Font("Verdana", 7, FontStyle.Regular);
+                    FindTabel.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+
+                    // Set the column header names.
+                    FindTabel.Columns[0].Name = "ID";
+                    FindTabel.Columns[1].Name = "Rower";
+                    FindTabel.Columns[2].Name = "Użytkownik";
+                    FindTabel.Columns[3].Name = "Wypożyczono";
+                    FindTabel.Columns[4].Name = "Oddano";
+                    FindTabel.Columns[5].Name = "Z";
+                    FindTabel.Columns[6].Name = "Do";
+                    FindTabel.Columns[7].Name = "Koszt";
+
+                    //utworzenie wpisu w wiersz i umieszczenie w tabeli
+                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy HH:mm:ss"),
+                    rdr.GetDateTime(4).ToString("dd.MM.yyyy HH:mm:ss"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
+                    //MessageBox.Show(row_d.ToString());
+                    FindTabel.Rows.Add(row_d);
+
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void FoundPlace(string name)
+        {
+            int id_place = 0;
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM miejsca WHERE nazwa='" + name + "'", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    id_place = rdr.GetInt32(0);
+                }
+                else
+                {
+                    MessageBox.Show("Brak miejsca", "Info");
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            //MessageBox.Show("Uzupełnianie danych");
+            try
+            {
+                //SELECT SupplierID, CompanyName,
+                //(SELECT MIN(UnitPrice) FROM Products WHERE SupplierID = z.SupplierID) AS Cena
+                //FROM Suppliers z;
+                MySqlCommand cmd = new MySqlCommand(@"SELECT id_wypozyczenia, id_rower,
+                (SELECT login FROM uzytkownik u WHERE u.id_uzytkownik=w.id_uzytkownik), data_wypozyczenia, data_zwrotu,
+                (SELECT nazwa FROM miejsca m1 WHERE m1.id_miejsca=w.id_miejsca_wypozyczenia),
+                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt
+                FROM wypozyczenia w WHERE (id_miejsca_wypozyczenia='" + id_place.ToString() + "' OR id_miejsca_oddania='"+ id_place.ToString()+ "') AND (NOT id_miejsca_oddania='NULL');", Form1.connection);
+                MySqlDataReader rdr = null;
+                rdr = cmd.ExecuteReader();
+                //tutaj uzupełnianie tabelki, nie wchodzi do pętli
+                while (rdr.Read())
+                {
+                    //MessageBox.Show("hello");
+                    FindTabel.ColumnCount = 8;
+                    FindTabel.ColumnHeadersVisible = true;
+
+                    // Set the column header style.
+                    DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+
+                    columnHeaderStyle.BackColor = Color.Beige;
+                    columnHeaderStyle.Font = new Font("Verdana", 7, FontStyle.Regular);
+                    FindTabel.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+
+                    // Set the column header names.
+                    FindTabel.Columns[0].Name = "ID";
+                    FindTabel.Columns[1].Name = "Rower";
+                    FindTabel.Columns[2].Name = "Użytkownik";
+                    FindTabel.Columns[3].Name = "Wypożyczono";
+                    FindTabel.Columns[4].Name = "Oddano";
+                    FindTabel.Columns[5].Name = "Z";
+                    FindTabel.Columns[6].Name = "Do";
+                    FindTabel.Columns[7].Name = "Koszt";
+
+                    //utworzenie wpisu w wiersz i umieszczenie w tabeli
+                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy HH:mm:ss"),
+                    rdr.GetDateTime(4).ToString("dd.MM.yyyy HH:mm:ss"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
+                    //MessageBox.Show(row_d.ToString());
+                    FindTabel.Rows.Add(row_d);
+
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void FindBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FindTabel.Rows.Clear();
+            if (ChoiceBox.Text == "loginie") FoundLogin(FindBox.Text);
+            else if (ChoiceBox.Text == "nr roweru") FoundBike(FindBox.Text);
+            else if (ChoiceBox.Text == "miejscu") FoundPlace(FindBox.Text);
         }
     }
 
