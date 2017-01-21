@@ -22,6 +22,7 @@ namespace mysql
         public static AddECostForm aecf1;
         public static AddAdminForm aaf1;
         public static AddPaymentForm apf1;
+        public static PaymentForm pf1;
         //public static EditPaymentForm epf1;
         private string type_name = "";
         //Thread t1;
@@ -40,6 +41,8 @@ namespace mysql
             //ExtraCostsPage.Hide();
             //ConnectionOKLabel.Hide();
             ConnectionBrakLabel.Hide();
+            DelPaymentButton.Enabled = false;
+            EditPaymentButton.Enabled = false;
             ShowAllUsers(12);
             ShowAllBikes();
             ShowAllPlaces();
@@ -841,7 +844,8 @@ namespace mysql
                         else
                         {
                             //t1.Suspend();
-                            this.Close();
+                            //this.Close();
+                            Thread.Sleep(10000);
                         }
                         temp = Form1.connection.State.ToString();
                     }
@@ -943,9 +947,20 @@ namespace mysql
                     {
                         id = rdr.GetInt16(0);
                         rdr.Close();
-                        aecf1 = new AddECostForm(id, login, "Wyświetlanie kosztów dodatkowych");
-                        aecf1.ShowDialog();
-
+                        MySqlCommand cmd1 = new MySqlCommand("SELECT * FROM koszty_dodatkowe WHERE id_uzytkownik='" + id + "';", Form1.connection);
+                        MySqlDataReader rdr1 = null;
+                        rdr1 = cmd1.ExecuteReader();
+                        if (rdr1.Read())
+                        {
+                            rdr1.Close();
+                            aecf1 = new AddECostForm(id, login, "Wyświetlanie kosztów dodatkowych");
+                            aecf1.ShowDialog();
+                        }
+                        else
+                        {
+                            rdr1.Close();
+                            MessageBox.Show("Brak kosztów dodatkowych użytkownika", "Informacja");
+                        }
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -1176,6 +1191,8 @@ namespace mysql
         {
             int id=0;
             string login = "";
+            decimal money = 0;
+            string status = "";
             try
             {
                 login = UserListBox3.SelectedItem.ToString();
@@ -1194,9 +1211,15 @@ namespace mysql
                     if (rdr.Read())
                     {
                         id=rdr.GetInt32(0);
+                        money = rdr.GetDecimal(3);
+                        status = rdr.GetString(4);
                         rdr.Close();
-                        Panel.apf1 = new AddPaymentForm(id, login);
-                        Panel.apf1.ShowDialog();
+                        if (status == "Aktywny")
+                        {
+                            Panel.apf1 = new AddPaymentForm(id, login, money);
+                            Panel.apf1.ShowDialog();
+                        }
+                        else MessageBox.Show("Użytkownik nie jest Aktywny, nie można dodać wpłaty.", "Info");
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -1237,8 +1260,8 @@ namespace mysql
                         id = rdr.GetInt32(0);
                         rdr.Close();
                         //od tego miejsca pozmieniać
-                        Panel.apf1 = new AddPaymentForm(id, login);
-                        Panel.apf1.ShowDialog();
+                        //Panel.apf1 = new AddPaymentForm(id, login);
+                        //Panel.apf1.ShowDialog();
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -1277,9 +1300,10 @@ namespace mysql
                     {
                         id = rdr.GetInt32(0);
                         rdr.Close();
+                        //MessageBox.Show("ID:" + id.ToString());
                         //od tego miejsca pozmieniać
-                        Panel.apf1 = new AddPaymentForm(id, login);
-                        Panel.apf1.ShowDialog();
+                        Panel.pf1 = new PaymentForm(id, login,"Wyświetlanie płatności");
+                        Panel.pf1.ShowDialog();
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();
@@ -1319,8 +1343,8 @@ namespace mysql
                         id = rdr.GetInt32(0);
                         rdr.Close();
                         //od tego miejsca pozmieniać
-                        Panel.apf1 = new AddPaymentForm(id, login);
-                        Panel.apf1.ShowDialog();
+                        //Panel.apf1 = new AddPaymentForm(id, login);
+                        //Panel.apf1.ShowDialog();
                     }
                     else MessageBox.Show("Nie znaleziono użytkownika " + login, "Błąd");
                     rdr.Close();

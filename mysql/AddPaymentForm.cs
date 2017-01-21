@@ -16,13 +16,14 @@ namespace mysql
         private int id_user=0;
         private string name = "";
         private DateTime date;
-        private decimal money;
+        private decimal money,old_money;
         private bool now = true;
-        public AddPaymentForm(int id,string n)
+        public AddPaymentForm(int id,string n,decimal m)
         {
             InitializeComponent();
             id_user = id;
             name = n;
+            old_money = m;
             UserLogin.Text += name;
             DateCheckBox.Checked = true;
             HourBox.Hide();
@@ -37,6 +38,7 @@ namespace mysql
         private void AddPayment()
         {
             //bool temp = false;
+            decimal temp_d;
             money = MoneyBox.Value;
             if (now) date = DateTime.Now;
             else date = DateBox.Value;
@@ -50,6 +52,14 @@ namespace mysql
                     string insert_query = "INSERT INTO wplaty (id_uzytkownik,kwota,data_wplaty) VALUES ('" + id_user + "','" + money + "','" + formatForMySql + "')";
                     MySqlCommand updateCmd = new MySqlCommand(insert_query, Form1.connection);
                     updateCmd.ExecuteNonQuery();
+                    temp_d = money + old_money;
+                    string temp_mon = temp_d.ToString();
+                    StringBuilder S = new StringBuilder(temp_mon);
+                    S.Replace(",", ".");
+                    temp_mon = S.ToString();
+                    string edit_query = "UPDATE uzytkownik SET stan_konta='"+temp_mon+"' WHERE id_uzytkownik='"+id_user+"';";
+                    MySqlCommand updateCmd2 = new MySqlCommand(edit_query, Form1.connection);
+                    updateCmd2.ExecuteNonQuery();
                     MessageBox.Show("Dodano wpłatę", "Gratulacje");
                 }
                 catch (MySqlException ex)
