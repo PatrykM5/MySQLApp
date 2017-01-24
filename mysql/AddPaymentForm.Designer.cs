@@ -122,7 +122,6 @@
             // 
             // DateBox
             // 
-            this.DateBox.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.DateBox.Location = new System.Drawing.Point(104, 88);
             this.DateBox.Name = "DateBox";
             this.DateBox.Size = new System.Drawing.Size(143, 20);

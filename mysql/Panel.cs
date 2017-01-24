@@ -1520,10 +1520,11 @@ namespace mysql
                     FindTabel.Columns[5].Name = "Z";
                     FindTabel.Columns[6].Name = "Do";
                     FindTabel.Columns[7].Name = "Koszt";
+                    //FindTabel.Columns[8].Name = "Czas [h]";
 
                     //utworzenie wpisu w wiersz i umieszczenie w tabeli
-                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy HH:mm:ss"),
-                    rdr.GetString(4), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
+                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy"),
+                    rdr.GetDateTime(4).ToString("dd.MM.yyyy"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
                     //MessageBox.Show(row_d.ToString());
                     FindTabel.Rows.Add(row_d);
 
@@ -1547,7 +1548,7 @@ namespace mysql
                 MySqlCommand cmd = new MySqlCommand(@"SELECT id_wypozyczenia, id_rower,
                 (SELECT login FROM uzytkownik u WHERE u.id_uzytkownik=w.id_uzytkownik), data_wypozyczenia, data_zwrotu,
                 (SELECT nazwa FROM miejsca m1 WHERE m1.id_miejsca=w.id_miejsca_wypozyczenia),
-                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt
+                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt, czas
                 FROM wypozyczenia w WHERE id_rower='" + number.ToString() + "' AND (NOT id_miejsca_oddania='NULL');", Form1.connection);
                 MySqlDataReader rdr = null;
                 rdr = cmd.ExecuteReader();
@@ -1574,10 +1575,11 @@ namespace mysql
                     FindTabel.Columns[5].Name = "Z";
                     FindTabel.Columns[6].Name = "Do";
                     FindTabel.Columns[7].Name = "Koszt";
+                    //FindTabel.Columns[8].Name = "Czas [h]";
 
                     //utworzenie wpisu w wiersz i umieszczenie w tabeli
-                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy HH:mm:ss"),
-                    rdr.GetDateTime(4).ToString("dd.MM.yyyy HH:mm:ss"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
+                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy"),
+                    rdr.GetDateTime(4).ToString("dd.MM.yyyy"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
                     //MessageBox.Show(row_d.ToString());
                     FindTabel.Rows.Add(row_d);
 
@@ -1629,7 +1631,7 @@ namespace mysql
                 MySqlCommand cmd = new MySqlCommand(@"SELECT id_wypozyczenia, id_rower,
                 (SELECT login FROM uzytkownik u WHERE u.id_uzytkownik=w.id_uzytkownik), data_wypozyczenia, data_zwrotu,
                 (SELECT nazwa FROM miejsca m1 WHERE m1.id_miejsca=w.id_miejsca_wypozyczenia),
-                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt
+                (SELECT nazwa FROM miejsca m2 WHERE m2.id_miejsca=w.id_miejsca_oddania), koszt, czas
                 FROM wypozyczenia w WHERE (id_miejsca_wypozyczenia='" + id_place.ToString() + "' OR id_miejsca_oddania='"+ id_place.ToString()+ "') AND (NOT id_miejsca_oddania='NULL');", Form1.connection);
                 MySqlDataReader rdr = null;
                 rdr = cmd.ExecuteReader();
@@ -1656,10 +1658,11 @@ namespace mysql
                     FindTabel.Columns[5].Name = "Z";
                     FindTabel.Columns[6].Name = "Do";
                     FindTabel.Columns[7].Name = "Koszt";
+                    //FindTabel.Columns[8].Name = "Czas [h]";
 
                     //utworzenie wpisu w wiersz i umieszczenie w tabeli
-                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy HH:mm:ss"),
-                    rdr.GetDateTime(4).ToString("dd.MM.yyyy HH:mm:ss"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
+                    string[] row_d = new string[] { rdr.GetInt32(0).ToString(), rdr.GetInt32(1).ToString(), rdr.GetString(2), rdr.GetDateTime(3).ToString("dd.MM.yyyy"),
+                    rdr.GetDateTime(4).ToString("dd.MM.yyyy"), rdr.GetString(5), rdr.GetString(6), rdr.GetDecimal(7).ToString()};
                     //MessageBox.Show(row_d.ToString());
                     FindTabel.Rows.Add(row_d);
 
@@ -1682,6 +1685,11 @@ namespace mysql
             if (ChoiceBox.Text == "loginie") FoundLogin(FindBox.Text);
             else if (ChoiceBox.Text == "nr roweru") FoundBike(FindBox.Text);
             else if (ChoiceBox.Text == "miejscu") FoundPlace(FindBox.Text);
+        }
+
+        private void FindButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

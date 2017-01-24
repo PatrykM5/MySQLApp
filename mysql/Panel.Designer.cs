@@ -76,6 +76,12 @@
             this.UserName3 = new System.Windows.Forms.Label();
             this.UserLoginBox3 = new System.Windows.Forms.TextBox();
             this.RentsPage = new System.Windows.Forms.TabPage();
+            this.FindButton = new System.Windows.Forms.Button();
+            this.FindTabel = new System.Windows.Forms.DataGridView();
+            this.FindLabel = new System.Windows.Forms.Label();
+            this.ChoiceLabel = new System.Windows.Forms.Label();
+            this.ChoiceBox = new System.Windows.Forms.ComboBox();
+            this.FindBox = new System.Windows.Forms.ComboBox();
             this.AdminsPage = new System.Windows.Forms.TabPage();
             this.AdminListLabel = new System.Windows.Forms.Label();
             this.AdminName = new System.Windows.Forms.Label();
@@ -89,12 +95,6 @@
             this.ConnectionOKLabel = new System.Windows.Forms.Label();
             this.ConnectionBrakLabel = new System.Windows.Forms.Label();
             this.backgroundW = new System.ComponentModel.BackgroundWorker();
-            this.FindBox = new System.Windows.Forms.ComboBox();
-            this.ChoiceBox = new System.Windows.Forms.ComboBox();
-            this.ChoiceLabel = new System.Windows.Forms.Label();
-            this.FindLabel = new System.Windows.Forms.Label();
-            this.FindTabel = new System.Windows.Forms.DataGridView();
-            this.FindButton = new System.Windows.Forms.Button();
             this.PanelControl.SuspendLayout();
             this.UsersPage.SuspendLayout();
             this.PlacesPage.SuspendLayout();
@@ -102,8 +102,8 @@
             this.ExtraCostsPage.SuspendLayout();
             this.PaymentPage.SuspendLayout();
             this.RentsPage.SuspendLayout();
-            this.AdminsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FindTabel)).BeginInit();
+            this.AdminsPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // PanelControl
@@ -610,6 +610,69 @@
             this.RentsPage.Text = "Wypożyczenia";
             this.RentsPage.UseVisualStyleBackColor = true;
             // 
+            // FindButton
+            // 
+            this.FindButton.Location = new System.Drawing.Point(422, 4);
+            this.FindButton.Name = "FindButton";
+            this.FindButton.Size = new System.Drawing.Size(75, 23);
+            this.FindButton.TabIndex = 5;
+            this.FindButton.Text = "Szukaj";
+            this.FindButton.UseVisualStyleBackColor = true;
+            this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
+            // 
+            // FindTabel
+            // 
+            this.FindTabel.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.FindTabel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.FindTabel.Location = new System.Drawing.Point(7, 33);
+            this.FindTabel.Name = "FindTabel";
+            this.FindTabel.ReadOnly = true;
+            this.FindTabel.Size = new System.Drawing.Size(500, 271);
+            this.FindTabel.TabIndex = 4;
+            // 
+            // FindLabel
+            // 
+            this.FindLabel.AutoSize = true;
+            this.FindLabel.Location = new System.Drawing.Point(214, 9);
+            this.FindLabel.Name = "FindLabel";
+            this.FindLabel.Size = new System.Drawing.Size(69, 13);
+            this.FindLabel.TabIndex = 3;
+            this.FindLabel.Text = "Podaj numer:";
+            // 
+            // ChoiceLabel
+            // 
+            this.ChoiceLabel.AutoSize = true;
+            this.ChoiceLabel.Location = new System.Drawing.Point(6, 9);
+            this.ChoiceLabel.Name = "ChoiceLabel";
+            this.ChoiceLabel.Size = new System.Drawing.Size(57, 13);
+            this.ChoiceLabel.TabIndex = 2;
+            this.ChoiceLabel.Text = "Szukaj po:";
+            // 
+            // ChoiceBox
+            // 
+            this.ChoiceBox.FormattingEnabled = true;
+            this.ChoiceBox.Items.AddRange(new object[] {
+            "loginie",
+            "nr roweru",
+            "miejscu"});
+            this.ChoiceBox.Location = new System.Drawing.Point(69, 6);
+            this.ChoiceBox.Name = "ChoiceBox";
+            this.ChoiceBox.Size = new System.Drawing.Size(121, 21);
+            this.ChoiceBox.TabIndex = 1;
+            this.ChoiceBox.Text = "Wybierz opcje";
+            this.ChoiceBox.SelectedIndexChanged += new System.EventHandler(this.ChoiceBox_SelectedIndexChanged);
+            // 
+            // FindBox
+            // 
+            this.FindBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.FindBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.FindBox.FormattingEnabled = true;
+            this.FindBox.Location = new System.Drawing.Point(289, 6);
+            this.FindBox.Name = "FindBox";
+            this.FindBox.Size = new System.Drawing.Size(121, 21);
+            this.FindBox.TabIndex = 0;
+            this.FindBox.SelectedIndexChanged += new System.EventHandler(this.FindBox_SelectedIndexChanged);
+            // 
             // AdminsPage
             // 
             this.AdminsPage.Controls.Add(this.AdminListLabel);
@@ -735,67 +798,6 @@
             // 
             this.backgroundW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundW_DoWork);
             // 
-            // FindBox
-            // 
-            this.FindBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.FindBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.FindBox.FormattingEnabled = true;
-            this.FindBox.Location = new System.Drawing.Point(289, 6);
-            this.FindBox.Name = "FindBox";
-            this.FindBox.Size = new System.Drawing.Size(121, 21);
-            this.FindBox.TabIndex = 0;
-            this.FindBox.SelectedIndexChanged += new System.EventHandler(this.FindBox_SelectedIndexChanged);
-            // 
-            // ChoiceBox
-            // 
-            this.ChoiceBox.FormattingEnabled = true;
-            this.ChoiceBox.Items.AddRange(new object[] {
-            "loginie",
-            "nr roweru",
-            "miejscu"});
-            this.ChoiceBox.Location = new System.Drawing.Point(69, 6);
-            this.ChoiceBox.Name = "ChoiceBox";
-            this.ChoiceBox.Size = new System.Drawing.Size(121, 21);
-            this.ChoiceBox.TabIndex = 1;
-            this.ChoiceBox.Text = "Wybierz opcje";
-            this.ChoiceBox.SelectedIndexChanged += new System.EventHandler(this.ChoiceBox_SelectedIndexChanged);
-            // 
-            // ChoiceLabel
-            // 
-            this.ChoiceLabel.AutoSize = true;
-            this.ChoiceLabel.Location = new System.Drawing.Point(6, 9);
-            this.ChoiceLabel.Name = "ChoiceLabel";
-            this.ChoiceLabel.Size = new System.Drawing.Size(57, 13);
-            this.ChoiceLabel.TabIndex = 2;
-            this.ChoiceLabel.Text = "Szukaj po:";
-            // 
-            // FindLabel
-            // 
-            this.FindLabel.AutoSize = true;
-            this.FindLabel.Location = new System.Drawing.Point(214, 9);
-            this.FindLabel.Name = "FindLabel";
-            this.FindLabel.Size = new System.Drawing.Size(69, 13);
-            this.FindLabel.TabIndex = 3;
-            this.FindLabel.Text = "Podaj numer:";
-            // 
-            // FindTabel
-            // 
-            this.FindTabel.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.FindTabel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.FindTabel.Location = new System.Drawing.Point(7, 33);
-            this.FindTabel.Name = "FindTabel";
-            this.FindTabel.Size = new System.Drawing.Size(500, 271);
-            this.FindTabel.TabIndex = 4;
-            // 
-            // FindButton
-            // 
-            this.FindButton.Location = new System.Drawing.Point(422, 4);
-            this.FindButton.Name = "FindButton";
-            this.FindButton.Size = new System.Drawing.Size(75, 23);
-            this.FindButton.TabIndex = 5;
-            this.FindButton.Text = "Szukaj";
-            this.FindButton.UseVisualStyleBackColor = true;
-            // 
             // Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -824,9 +826,9 @@
             this.PaymentPage.PerformLayout();
             this.RentsPage.ResumeLayout(false);
             this.RentsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FindTabel)).EndInit();
             this.AdminsPage.ResumeLayout(false);
             this.AdminsPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FindTabel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
